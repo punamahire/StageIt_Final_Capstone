@@ -16,7 +16,7 @@ GO
 
 CREATE TABLE [UserProfile] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [FirebaseUserId] int NOT NULL,
+  [FirebaseUserId] nvarchar(50) NOT NULL,
   [Name] nvarchar(255) NOT NULL,
   [Email] nvarchar(255) NOT NULL,
   [ImageUrl] nvarchar(255)
