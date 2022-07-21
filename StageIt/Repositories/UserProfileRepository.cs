@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using StageIt.Models;
 using StageIt.Utils;
+using System.Collections.Generic;
 
 namespace StageIt.Repositories
 {
@@ -16,10 +17,12 @@ namespace StageIt.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.Id, Up.FirebaseUserId, up.Name, 
-                               up.Email, up.ImageUrl
+                        SELECT up.Id, up.FirebaseUserId, up.Name, 
+                               up.Email, up.ImageUrl,
+                               upr.RoleId
                           FROM UserProfile up
-                         WHERE FirebaseUserId = @FirebaseuserId";
+                            LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
+                         WHERE up.FirebaseUserId = @FirebaseuserId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
 
@@ -34,7 +37,8 @@ namespace StageIt.Repositories
                             FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
-                            ImageUrl = DbUtils.GetString(reader, "ImageUrl")
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            RoleId = DbUtils.GetInt(reader, "RoleId")
                         };
                     }
                     reader.Close();
@@ -59,9 +63,56 @@ namespace StageIt.Repositories
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@ImageLocation", userProfile.ImageUrl);
+                    DbUtils.AddParameter(cmd, "@ImageUrl", userProfile.ImageUrl);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
+                }
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO UserProfileRole (UserProfileId, RoleId)  
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@UserProfileId, @RoleId)";
+                    DbUtils.AddParameter(cmd, "@UserProfileId", userProfile.Id);
+                    DbUtils.AddParameter(cmd, "@RoleId", userProfile.RoleId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<UserProfile> GetAllStagers()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                 SELECT up.Id, up.FirebaseUserId, up.Name, up.Email, 
+                      up.ImageUrl AS UserProfileImageUrl
+                 FROM Userprofile up 
+                    LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
+                 WHERE upr.RoleId = 2
+                 ";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var stagers = new List<UserProfile>();
+                        while (reader.Read())
+                        {
+                            stagers.Add(new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl")
+                            });
+                        }
+
+                        return stagers;
+                    }
                 }
             }
         }

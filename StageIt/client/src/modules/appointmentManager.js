@@ -1,8 +1,8 @@
 import { getToken } from "./authManager";
 
-const baseUrl = '/api/userprofile';
+const baseUrl = '/api/appointment';
 
-export const getAllStagers = () => {
+export const getMyAppointments = () => {
     return getToken().then((token) => {
         return fetch(baseUrl, {
             method: "GET",

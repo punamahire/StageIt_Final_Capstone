@@ -25,6 +25,8 @@ namespace StageIt.Models
         [MaxLength(255)]
         public string ImageUrl { get; set; }
 
+        public int RoleId { get; set; }
+
     }
 }
 

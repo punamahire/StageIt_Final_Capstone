@@ -19,9 +19,8 @@ export const App = () => {
 
   return (
     <Router>
-      {/* <Header isLoggedIn={isLoggedIn} />
-      <ApplicationViews isLoggedIn={isLoggedIn} /> */}
-      <p className="text-center mt-2">Hello world</p>
+      <Header isLoggedIn={isLoggedIn} />
+      <ApplicationViews isLoggedIn={isLoggedIn} />
     </Router>
   );
 }

@@ -2,9 +2,12 @@
 using System;
 using StageIt.Models;
 using StageIt.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace StageIt.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -13,6 +16,28 @@ namespace StageIt.Controllers
         public UserProfileController(IUserProfileRepository userProfileRepository)
         {
             _userProfileRepository = userProfileRepository;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var userProfile = GetCurrentUserProfile();
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                if (userProfile.RoleId == 1)
+                {
+                    return Ok(_userProfileRepository.GetAllStagers());
+                }
+                else // if (userProfile.RoleId == 2)
+                {
+                    // for now just return all stagers
+                    return Ok(_userProfileRepository.GetAllStagers());
+                }
+            }
         }
 
         [HttpGet("{firebaseUserId}")]
@@ -40,6 +65,12 @@ namespace StageIt.Controllers
                 nameof(GetUserProfile),
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

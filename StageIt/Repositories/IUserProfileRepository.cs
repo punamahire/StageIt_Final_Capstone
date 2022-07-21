@@ -1,4 +1,5 @@
 ﻿using StageIt.Models;
+using System.Collections.Generic;
 
 namespace StageIt.Repositories
 {
@@ -6,6 +7,6 @@ namespace StageIt.Repositories
     {
         void Add(UserProfile userProfile);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
-
+        List<UserProfile> GetAllStagers();
     }
 }
