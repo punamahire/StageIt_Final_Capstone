@@ -23,5 +23,23 @@ namespace StageIt.Controllers
         {
             return Ok(_appointmentRepository.GetAll());
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var appointment = _appointmentRepository.GetById(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            return Ok(appointment);
+        }
+
+        [HttpPost]
+        public IActionResult Post(Appointment appointment)
+        {
+            _appointmentRepository.Add(appointment);
+            return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
+        }
     }
 }

@@ -57,12 +57,14 @@ export default function Register() {
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="roleId">Are you a Client or Stager?</Label>
-                    <select id="roleId" className="form-control"
+                    <Input
+                        id="roleId"
+                        type="select"
                         onChange={(e) => setRoleId(e.target.value)}>
                         <option value="">Select Your Role</option>
                         <option value="1">Client</option>
                         <option value="2">Stager</option>
-                    </select>
+                    </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Password</Label>

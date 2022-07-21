@@ -19,5 +19,6 @@ namespace StageIt.Models
         public string Notes { get; set; }
 
         public UserProfile UserProfile { get; set; }
+        public UserProfile StagerProfile { get; set; }
     }
 }

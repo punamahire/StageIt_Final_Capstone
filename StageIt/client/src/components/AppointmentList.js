@@ -8,6 +8,18 @@ export const AppointmentList = () => {
         getMyAppointments().then(apptsFromAPI => setAppointments(apptsFromAPI));
     };
 
+    const formatDate = (apptDate) => {
+        const dt = new Date(apptDate);
+        const date = dt.getDate();
+        const year = dt.getFullYear();
+        const hours = dt.getHours();
+        const mins = dt.getMinutes();
+
+        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let monthName = month[dt.getMonth()];
+        return (`${monthName} ${date}, ${year}  ${hours}:${mins}`);
+    }
+
     useEffect(() => {
         getAppointments();
     }, [])
@@ -20,10 +32,10 @@ export const AppointmentList = () => {
                     <div className="appointment-card" key={appointment.id}>
                         <div className="appointment-content">
                             <div className="title-content">
-                                <h3>{appointment.userProfile?.name}</h3>
-                                <p>{appointment.bookingTime}</p>
-                                <p>{appointment.address}</p>
-                                <p>{appointment.notes}</p>
+                                <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
+                                <p>Appointment Date: {formatDate(appointment.appointmentTime)}</p>
+                                <p>Address: {appointment.address}</p>
+                                <p>Notes: {appointment.notes}</p>
                             </div>
                         </div>
                     </div>
