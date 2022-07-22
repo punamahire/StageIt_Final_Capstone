@@ -41,5 +41,18 @@ namespace StageIt.Controllers
             _appointmentRepository.Add(appointment);
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, Appointment appointment)
+        {
+            if (id != appointment.Id)
+            {
+                return BadRequest();
+            }
+
+            _appointmentRepository.Edit(appointment);
+            return NoContent();
+
+        }
     }
 }

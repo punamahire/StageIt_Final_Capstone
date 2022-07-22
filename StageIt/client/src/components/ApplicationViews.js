@@ -5,6 +5,7 @@ import Register from "./Register";
 import { StagerList } from "./StagerList";
 import { AppointmentList } from "./AppointmentList";
 import { CreateAppointmentForm } from "./CreateAppointmentForm";
+import { EditAppointmentForm } from "./EditAppointmentForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
     return (
@@ -22,8 +23,8 @@ export default function ApplicationViews({ isLoggedIn }) {
                     <Route path="myappointments">
                         <Route index element={isLoggedIn ? <AppointmentList /> : <Navigate to="/login" />} />
                         <Route path="add/:id" element={<CreateAppointmentForm />} />
+                        <Route path="edit/:appointmentId" element={<EditAppointmentForm />} />
                         {/* <Route path=":id" element={<AppointmentDetails />} />
-                        <Route path="edit/:id" element={<EditAppointmentForm />} />
                         <Route path="delete/:id" element={<DeleteAppointment />} /> */}
                     </Route>
 

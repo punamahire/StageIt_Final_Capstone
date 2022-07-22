@@ -124,5 +124,32 @@ namespace StageIt.Repositories
                 }
             }
         }
+
+        public void Edit(Appointment appointment)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Appointment
+                                        SET   UserProfileId = @UserProfileId, 
+                                              StagerId = @StagerId, 
+                                              AppointmentTime = @AppointmentTime,
+                                              Address = @Address, 
+                                              Notes = @Notes
+                                        WHERE Id = @Id";
+                    DbUtils.AddParameter(cmd, "@UserProfileId", appointment.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@StagerId", appointment.StagerId);
+                    DbUtils.AddParameter(cmd, "@AppointmentTime", appointment.AppointmentTime);
+                    DbUtils.AddParameter(cmd, "@Address", appointment.Address);
+                    DbUtils.AddParameter(cmd, "@Notes", appointment.Notes);
+                    DbUtils.AddParameter(cmd, "@Id", appointment.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

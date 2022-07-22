@@ -13,17 +13,13 @@ export const CreateAppointmentForm = () => {
     const [appointment, setAppointment] = useState({
         userProfileId: 0,
         stagerId: 0,
-        appointmentTime: new Date(),
+        appointmentTime: '',
         address: '',
         notes: '',
     })
 
     const getCurrentUser = () => {
-        console.log("setting current user");
-        getUserByFirebaseId().then(user => {
-            console.log(`user: ${user}`);
-            setCurrentUser(user);
-        });
+        getUserByFirebaseId().then(user => setCurrentUser(user));
     }
 
     const handleCreateAppointment = (event) => {
@@ -50,8 +46,8 @@ export const CreateAppointmentForm = () => {
             <h1>Create New Appointment</h1>
             <Form>
                 <FormGroup>
-                    <Label for="apptDateTime">Appointment Time</Label>
-                    <Input type="date" name="apptDateTime" id="apptDateTime" onChange={handleInputChange} />
+                    <Label for="appointmentTime">Appointment Time</Label>
+                    <Input type="datetime-local" name="appointmentTime" id="appointmentTime" onChange={handleInputChange} />
                 </FormGroup>
                 <FormGroup>
                     <Label for="address">Address</Label>
