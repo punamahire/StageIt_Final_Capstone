@@ -50,4 +50,15 @@ export const getAppointmentById = (id) => {
         })
             .then(res => res.json())
     })
-}
+};
+
+export const deleteAppointment = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    })
+};

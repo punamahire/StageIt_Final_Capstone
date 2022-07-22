@@ -54,5 +54,12 @@ namespace StageIt.Controllers
             return NoContent();
 
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _appointmentRepository.Delete(id);
+            return NoContent();
+        }
     }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { getMyAppointments } from "../modules/appointmentManager";
+import { getMyAppointments, deleteAppointment } from "../modules/appointmentManager";
 import Moment from 'moment';
 
 export const AppointmentList = () => {
@@ -14,6 +14,13 @@ export const AppointmentList = () => {
 
     const handleEditAppt = (apptId) => {
         navigate(`/myappointments/edit/${apptId}`);
+    }
+
+    const handleDeleteAppt = (apptId) => {
+        // delete the selected appt and then show the updated list
+        deleteAppointment(apptId).then(r => {
+            getAppointments();
+        });
     }
 
     useEffect(() => {
@@ -34,7 +41,8 @@ export const AppointmentList = () => {
                                 <p>Notes: {appointment.notes}</p>
                             </div>
                         </div>
-                        <Button color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit Appointment</Button>
+                        <Button className="mx-2" color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>
+                        <Button color="danger" onClick={() => handleDeleteAppt(appointment.id)}>Remove</Button>
                         <hr></hr>
                     </div>
                 )

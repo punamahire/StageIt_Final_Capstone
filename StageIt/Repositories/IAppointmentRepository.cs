@@ -9,5 +9,6 @@ namespace StageIt.Repositories
         Appointment GetById(int id);
         void Add(Appointment appointment);
         void Edit(Appointment appointment);
+        void Delete(int id);
     }
 }
