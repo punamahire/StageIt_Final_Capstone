@@ -36,7 +36,7 @@ export const AppointmentList = () => {
                         <div className="appointment-content">
                             <div className="title-content">
                                 <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
-                                <p>Appointment Date: {Moment(appointment.appointmentTime).format('MMMM do, yyyy H:mm a')}</p>
+                                <p>Appointment Date: {Moment(appointment.appointmentTime).format('MMMM Do, YYYY H:mm a')}</p>
                                 <p>Address: {appointment.address}</p>
                                 <p>Notes: {appointment.notes}</p>
                             </div>

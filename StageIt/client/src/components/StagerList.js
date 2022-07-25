@@ -25,8 +25,10 @@ export const StagerList = () => {
             {stagers.map(stager => {
                 return (
                     <div className="stager-card" key={stager.id}>
-                        {stager.imageUrl &&
-                            <img src={stager.imageUrl}></img>
+                        {stager.imageUrl ?
+                            <img src={stager.imageUrl} alt="user image" width={50}></img>
+                            :
+                            ''
                         }
                         <div className="stager-content">
                             <div className="title-content">
@@ -34,6 +36,7 @@ export const StagerList = () => {
                                 <Button color="primary" onClick={() => handleBookAppt(stager.id)}>Book this Stager</Button>
                             </div>
                         </div>
+                        <hr></hr>
                     </div>
                 )
             })}

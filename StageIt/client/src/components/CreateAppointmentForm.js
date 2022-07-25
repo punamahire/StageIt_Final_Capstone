@@ -37,12 +37,17 @@ export const CreateAppointmentForm = () => {
         setAppointment(apptCopy);
     }
 
+    const handleCancel = (event) => {
+        event.preventDefault();
+        navigate("/");
+    }
+
     useEffect(() => {
         getCurrentUser();
     }, [])
 
     return (
-        <div className="container">
+        <div className="container col-sm-6">
             <h1>Create New Appointment</h1>
             <Form>
                 <FormGroup>
@@ -57,7 +62,8 @@ export const CreateAppointmentForm = () => {
                     <Label for="notes">Notes</Label>
                     <Input type="textarea" name="notes" id="notes" placeholder="Any Notes..." onChange={handleInputChange} />
                 </FormGroup>
-                <Button onClick={handleCreateAppointment}>Submit</Button>
+                <Button color="primary" onClick={handleCreateAppointment}>Create</Button> &nbsp;&nbsp;
+                <Button color="secondary" onClick={handleCancel}>Cancel</Button>
             </Form>
         </div>
     )

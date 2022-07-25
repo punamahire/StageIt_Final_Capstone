@@ -46,8 +46,8 @@ export const EditAppointmentForm = () => {
     }, [])
 
     return (
-        <div className="container">
-            <h1>Edit Appointment</h1>
+        <div className="container col-sm-6">
+            <h1>Update Appointment</h1>
             <Form>
                 <FormGroup>
                     <Label for="appointmentTime">Appointment Time</Label>
@@ -61,7 +61,7 @@ export const EditAppointmentForm = () => {
                     <Label for="notes">Notes</Label>
                     <Input type="textarea" name="notes" id="notes" placeholder="Any Notes..." defaultValue={appointment.notes} onChange={handleInputChange} />
                 </FormGroup>
-                <Button className="mx-2" color="primary" onClick={handleEditAppointment}>Submit</Button>
+                <Button className="mx-2" color="primary" onClick={handleEditAppointment}>Update</Button>
                 <Button color="secondary" onClick={handleCancel}>Cancel</Button>
             </Form>
         </div>
