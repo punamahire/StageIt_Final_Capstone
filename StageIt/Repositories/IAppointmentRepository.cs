@@ -5,7 +5,7 @@ namespace StageIt.Repositories
 {
     public interface IAppointmentRepository
     {
-        List<Appointment> GetAll();
+        List<Appointment> GetApptsByUserId(int userId, int roleId);
         Appointment GetById(int id);
         void Add(Appointment appointment);
         void Edit(Appointment appointment);

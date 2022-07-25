@@ -18,10 +18,10 @@ namespace StageIt.Controllers
             _appointmentRepository = appointmentRepository;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("GetUserAppointments")]
+        public IActionResult Get(int id, int roleId)
         {
-            return Ok(_appointmentRepository.GetAll());
+            return Ok(_appointmentRepository.GetApptsByUserId(id, roleId));
         }
 
         [HttpGet("{id}")]

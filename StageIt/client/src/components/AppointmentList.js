@@ -3,13 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { getMyAppointments, deleteAppointment } from "../modules/appointmentManager";
 import Moment from 'moment';
+import { getUserByFirebaseId } from "../modules/authManager";
 
 export const AppointmentList = () => {
     const [appointments, setAppointments] = useState([]);
+    const [currentUser, setCurrentUser] = useState();
+
     const navigate = useNavigate();
 
+    const getCurrentUser = () => {
+        getUserByFirebaseId().then(user => {
+            setCurrentUser(user);
+
+            if (user !== null) {
+                getMyAppointments(user.id, user.roleId)
+                    .then(apptsFromAPI => setAppointments(apptsFromAPI));
+            }
+        });
+    }
+
     const getAppointments = () => {
-        getMyAppointments().then(apptsFromAPI => setAppointments(apptsFromAPI));
+        getMyAppointments(currentUser.id, currentUser.roleId)
+            .then(apptsFromAPI => setAppointments(apptsFromAPI));
     };
 
     const handleEditAppt = (apptId) => {
@@ -24,7 +39,7 @@ export const AppointmentList = () => {
     }
 
     useEffect(() => {
-        getAppointments();
+        getCurrentUser();
     }, [])
 
     return (
@@ -35,7 +50,11 @@ export const AppointmentList = () => {
                     <div className="appointment-card mb-3" key={appointment.id}>
                         <div className="appointment-content">
                             <div className="title-content">
-                                <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
+                                {(currentUser && currentUser.roleId == 1) ?
+                                    <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
+                                    :
+                                    <h3>Client's Name: {appointment.userProfile?.name}</h3>
+                                }
                                 <p>Appointment Date: {Moment(appointment.appointmentTime).format('MMMM Do, YYYY H:mm a')}</p>
                                 <p>Address: {appointment.address}</p>
                                 <p>Notes: {appointment.notes}</p>

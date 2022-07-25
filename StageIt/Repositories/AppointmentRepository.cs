@@ -9,20 +9,48 @@ namespace StageIt.Repositories
     {
         public AppointmentRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<Appointment> GetAll()
+        public List<Appointment> GetApptsByUserId(int userId, int roleId)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
+                    if (roleId == 1)
+                    {
+                        cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
+                                               a.AppointmentTime, a.Address, a.Notes,
+                                               up.Name AS UserName, stg.Name AS StagerName                                              
+                                          FROM Appointment a
+                                     LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
+                                     LEFT JOIN UserProfile stg ON a.StagerId = stg.Id
+                                          WHERE up.Id = @userId
+                                     ";
+                    }
+                    else if (roleId == 2)
+                    {
+                        cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
+                                               a.AppointmentTime, a.Address, a.Notes,
+                                               up.Name AS UserName, stg.Name AS StagerName                                              
+                                          FROM Appointment a
+                                     LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
+                                     LEFT JOIN UserProfile stg ON a.StagerId = stg.Id
+                                          WHERE stg.Id = @userId
+                                     ";
+                    }
+                    else
+                    {
+                        cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
                                                a.AppointmentTime, a.Address, a.Notes,
                                                up.Name AS UserName, stg.Name AS StagerName                                              
                                           FROM Appointment a
                                      LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
                                      LEFT JOIN UserProfile stg ON a.StagerId = stg.Id
                                      ";
+                    }
+
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         var appts = new List<Appointment>();

@@ -2,9 +2,9 @@ import { getToken } from "./authManager";
 
 const _apiUrl = '/api/appointment';
 
-export const getMyAppointments = () => {
+export const getMyAppointments = (userId, roleId) => {
     return getToken().then((token) => {
-        return fetch(_apiUrl, {
+        return fetch(_apiUrl + '/getuserappointments?id=' + userId + '&roleId=' + roleId, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ export const addAppointment = (appointment) => {
 
 export const editAppointment = (appointment) => {
     return getToken().then((token) => {
-        return fetch(`${_apiUrl}/${appointment.id}`, {
+        return fetch(`${_apiUrl} / ${appointment.id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -42,7 +42,7 @@ export const editAppointment = (appointment) => {
 
 export const getAppointmentById = (id) => {
     return getToken().then((token) => {
-        return fetch(`${_apiUrl}/${id}`, {
+        return fetch(`${_apiUrl} / ${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ export const getAppointmentById = (id) => {
 
 export const deleteAppointment = (id) => {
     return getToken().then((token) => {
-        return fetch(`${_apiUrl}/${id}`, {
+        return fetch(`${_apiUrl} / ${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,

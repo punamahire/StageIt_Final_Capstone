@@ -13,30 +13,32 @@ namespace StageIt.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly IUserProfileRepository _userProfileRepository;
-        public UserProfileController(IUserProfileRepository userProfileRepository)
+        private readonly IAppointmentRepository _appointmentRepository;
+        public UserProfileController(IUserProfileRepository userProfileRepository, 
+                                     IAppointmentRepository appointmentRepository)
         {
             _userProfileRepository = userProfileRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
             var userProfile = GetCurrentUserProfile();
-            if (userProfile == null)
+            if (userProfile == null || userProfile.RoleId == 1)
             {
-                return NotFound();
+                // a client should see list of all stagers irrespective 
+                // of whether he is logged in or not
+                return Ok(_userProfileRepository.GetAllStagers());
+            }
+            else if (userProfile.RoleId == 2)
+            {
+                // a stager should see rest of the stagers
+                return Ok(_userProfileRepository.GetAllStagers());
             }
             else
             {
-                if (userProfile.RoleId == 1)
-                {
-                    return Ok(_userProfileRepository.GetAllStagers());
-                }
-                else // if (userProfile.RoleId == 2)
-                {
-                    // for now just return all stagers
-                    return Ok(_userProfileRepository.GetAllStagers());
-                }
+                return BadRequest();
             }
         }
 

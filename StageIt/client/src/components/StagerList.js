@@ -55,6 +55,7 @@ export const StagerList = () => {
                     onClick={() => handleSearchLocations()}>Search</button>
             </div>
 
+            {/* display stagers who serve the locations searched */}
             {foundStagers.length > 0 ?
                 foundStagers.map(stager => {
                     return (
@@ -76,6 +77,8 @@ export const StagerList = () => {
                     )
                 })
                 :
+                // A client should see a list of all stagers.
+                // A stager should see rest of the stagers
                 stagers.map(stager => {
                     return (
                         <div className="stager-card" key={stager.id}>
