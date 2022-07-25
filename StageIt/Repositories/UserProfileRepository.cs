@@ -19,6 +19,7 @@ namespace StageIt.Repositories
                     cmd.CommandText = @"
                         SELECT up.Id, up.FirebaseUserId, up.Name, 
                                up.Email, up.ImageUrl,
+                               up.LocationsServed,
                                upr.RoleId
                           FROM UserProfile up
                             LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
@@ -38,6 +39,7 @@ namespace StageIt.Repositories
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
                             ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            LocationsServed = DbUtils.GetString(reader, "LocationsServed"),
                             RoleId = DbUtils.GetInt(reader, "RoleId")
                         };
                     }
@@ -56,14 +58,16 @@ namespace StageIt.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, Name,  
-                                                                 Email, ImageUrl)
+                                                                 Email, ImageUrl,
+                                                                 LocationsServed)
                                         OUTPUT INSERTED.ID
                                         VALUES (@FirebaseUserId, @Name,  
-                                                @Email, @ImageUrl)";
+                                                @Email, @ImageUrl, @LocationsServed)";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
                     DbUtils.AddParameter(cmd, "@ImageUrl", userProfile.ImageUrl);
+                    DbUtils.AddParameter(cmd, "@LocationsServed", userProfile.LocationsServed);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
                 }
@@ -90,7 +94,8 @@ namespace StageIt.Repositories
                 {
                     cmd.CommandText = @"
                  SELECT up.Id, up.FirebaseUserId, up.Name, up.Email, 
-                      up.ImageUrl AS UserProfileImageUrl
+                      up.ImageUrl AS UserProfileImageUrl,
+                      up.LocationsServed
                  FROM Userprofile up 
                     LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
                  WHERE upr.RoleId = 2
@@ -107,7 +112,8 @@ namespace StageIt.Repositories
                                 FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                                 Name = DbUtils.GetString(reader, "Name"),
                                 Email = DbUtils.GetString(reader, "Email"),
-                                ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl")
+                                ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl"),
+                                LocationsServed = DbUtils.GetString(reader, "LocationsServed")
                             });
                         }
 

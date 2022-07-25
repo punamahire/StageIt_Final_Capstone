@@ -1,0 +1,14 @@
+.search-div {
+    margin-top: 3em;
+}
+
+.search-div {
+    flex: 1 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search-input {
+    margin-right: 0.25em;
+    width: 218px;
+}

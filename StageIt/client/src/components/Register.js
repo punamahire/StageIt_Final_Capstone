@@ -10,6 +10,7 @@ export default function Register() {
     const [email, setEmail] = useState();
     const [imageUrl, setImageUrl] = useState();
     const [roleId, setRoleId] = useState();
+    const [locationsServed, setLocationsServed] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
 
@@ -22,7 +23,8 @@ export default function Register() {
                 name,
                 imageUrl,
                 email,
-                roleId
+                roleId,
+                locationsServed
             };
             register(userProfile, password).then(() => navigate("/"));
         }
@@ -66,6 +68,16 @@ export default function Register() {
                         <option value="2">Stager</option>
                     </Input>
                 </FormGroup>
+                {roleId == 2 &&
+                    <FormGroup>
+                        <Label htmlFor="locationsServed">Locations Served</Label>
+                        <Input
+                            id="locationsServed"
+                            type="text"
+                            onChange={(e) => setLocationsServed(e.target.value)}
+                        />
+                    </FormGroup>
+                }
                 <FormGroup>
                     <Label for="password">Password</Label>
                     <Input

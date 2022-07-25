@@ -26,7 +26,7 @@ namespace StageIt.Models
         public string ImageUrl { get; set; }
 
         public int RoleId { get; set; }
-
+        public string LocationsServed { get; set; }
     }
 }
 
