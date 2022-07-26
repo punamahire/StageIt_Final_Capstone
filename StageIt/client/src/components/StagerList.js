@@ -2,17 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { getAllStagers } from "../modules/stagerManager";
+import { getUserByFirebaseId } from '../modules/authManager';
+import { StagerCard } from "./StagerCard";
 import "./StagerList.css"
 
 export const StagerList = () => {
     const [stagers, setStagers] = useState([]);
     const [locationsToSearch, setLocationsToSearch] = useState("");
     const [foundStagers, setFoundStagers] = useState([]);
+    const [currentUser, setCurrentUser] = useState();
     const navigate = useNavigate();
 
     const getStagers = () => {
         getAllStagers().then(stagersFromAPI => setStagers(stagersFromAPI));
     };
+
+    const getCurrentUser = () => {
+        getUserByFirebaseId().then(user => setCurrentUser(user));
+    }
 
     // update state with the search input user entered
     const handleInputChange = (event) => {
@@ -39,6 +46,7 @@ export const StagerList = () => {
 
     useEffect(() => {
         getStagers();
+        getCurrentUser();
     }, [])
 
     const handleBookAppt = (stagerId) => {
@@ -47,12 +55,14 @@ export const StagerList = () => {
 
     return (
         <div className="stager-container">
-            <h1>Stagers List</h1>
-            <div className="search-div">
-                <input className="search-input mr-sm-2" type="search" placeholder="Search locations" aria-label="Search"
-                    id="locations" onChange={(e) => handleInputChange(e)} required autoFocus value={locationsToSearch} />
-                <button className="btn btn-success my-2 my-sm-0" type="submit"
-                    onClick={() => handleSearchLocations()}>Search</button>
+            <div className="title-search-div">
+                <h1>List of Stagers</h1>
+                <div className="search-div">
+                    <input className="search-input mr-sm-2" type="search" placeholder="Search locations" aria-label="Search"
+                        id="locations" onChange={(e) => handleInputChange(e)} required autoFocus value={locationsToSearch} />
+                    <button className="btn btn-success my-2 my-sm-0" type="submit"
+                        onClick={() => handleSearchLocations()}>Search</button>
+                </div>
             </div>
 
             {/* display stagers who serve the locations searched */}
@@ -81,21 +91,11 @@ export const StagerList = () => {
                 // A stager should see rest of the stagers
                 stagers.map(stager => {
                     return (
-                        <div className="stager-card" key={stager.id}>
-                            {stager.imageUrl ?
-                                <img src={stager.imageUrl} alt="user image" width={50}></img>
-                                :
-                                ''
-                            }
-                            <div className="stager-content">
-                                <div className="title-content">
-                                    <h3>{stager.name}</h3>
-                                    <p><strong>Locations served:</strong> {stager.locationsServed}</p>
-                                    <Button color="primary" onClick={() => handleBookAppt(stager.id)}>Book this Stager</Button>
-                                </div>
-                            </div>
-                            <hr></hr>
-                        </div>
+                        <StagerCard
+                            key={stager.id}
+                            singleStager={stager}
+                            userProfile={currentUser}
+                            handleBookAppt={handleBookAppt} />
                     )
                 })
             }

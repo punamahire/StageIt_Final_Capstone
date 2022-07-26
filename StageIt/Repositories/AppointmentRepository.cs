@@ -27,17 +27,6 @@ namespace StageIt.Repositories
                                           WHERE up.Id = @userId
                                      ";
                     }
-                    else if (roleId == 2)
-                    {
-                        cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
-                                               a.AppointmentTime, a.Address, a.Notes,
-                                               up.Name AS UserName, stg.Name AS StagerName                                              
-                                          FROM Appointment a
-                                     LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
-                                     LEFT JOIN UserProfile stg ON a.StagerId = stg.Id
-                                          WHERE stg.Id = @userId
-                                     ";
-                    }
                     else
                     {
                         cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
@@ -46,6 +35,7 @@ namespace StageIt.Repositories
                                           FROM Appointment a
                                      LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
                                      LEFT JOIN UserProfile stg ON a.StagerId = stg.Id
+                                          WHERE stg.Id = @userId
                                      ";
                     }
 

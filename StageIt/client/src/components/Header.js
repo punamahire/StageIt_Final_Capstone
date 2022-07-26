@@ -19,17 +19,19 @@ export default function Header({ isLoggedIn }) {
     return (
         <div id="nav">
             <Navbar color="dark" light expand="md">
+                {/* <img
+                    className="d-block w-100"
+                    src="Images/Logo.jpg" width={10} height={50}
+                    alt="First slide"
+                /> */}
                 <NavbarBrand tag={RRNavLink} to="/" className="nav-link" activeclassname="active">StageIt</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
-                        { /* When isLoggedIn === true, we will render the Home link */}
-                        {isLoggedIn &&
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/">Home</NavLink>
-                            </NavItem>
-
-                        }
+                        { /* Home link should render irrespective of user login */}
+                        <NavItem>
+                            <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                        </NavItem>
                     </Nav>
                     <Nav navbar>
                         {isLoggedIn &&

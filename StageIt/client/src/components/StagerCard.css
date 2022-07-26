@@ -1,0 +1,19 @@
+.card-color {
+    background-color: #FFF6EA;
+}
+
+.card-header-footer-color {
+    background-color: #f7debd !important;
+}
+
+.card-content {
+    display: flex;
+}
+
+.image-div {
+    flex: 1 1;
+}
+
+.content-div {
+    flex: 1 1;
+}

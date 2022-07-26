@@ -1,5 +1,13 @@
+.title-search-div {
+    display: flex;
+}
+
+h1 {
+    flex: 1 1;
+}
+
 .search-div {
-    margin-top: 3em;
+    flex: 1 1;
 }
 
 .search-div {

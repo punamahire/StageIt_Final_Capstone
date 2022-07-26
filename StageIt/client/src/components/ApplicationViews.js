@@ -28,6 +28,10 @@ export default function ApplicationViews({ isLoggedIn }) {
                         <Route path="delete/:id" element={<DeleteAppointment />} /> */}
                     </Route>
 
+                    {/* <Route path="stagingimages">
+                        <Route exact path="/stagingimages/:stagerId/images" element={<StagingImages />} />
+                    </Route> */}
+
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
 
