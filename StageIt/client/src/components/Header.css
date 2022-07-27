@@ -1,3 +1,8 @@
-.nav-link {
-    color: white;
+.nav-link,
+.nav-link:active {
+    color: white !important;
+}
+
+.active {
+    border-bottom: 1px solid #FFF;
 }

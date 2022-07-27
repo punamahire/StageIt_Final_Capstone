@@ -8,6 +8,7 @@ import { getUserByFirebaseId } from "../modules/authManager";
 export const AppointmentList = () => {
     const [appointments, setAppointments] = useState([]);
     const [currentUser, setCurrentUser] = useState();
+    const [confirmDialog, setConfirmDialog] = useState(false);
 
     const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ export const AppointmentList = () => {
     }, [])
 
     return (
-        <div className="appointment-container mx-3">
+        <div className="appointment-container mx-3 h-100">
             <h1>Appointments List</h1>
             {appointments.map(appointment => {
                 return (
@@ -60,8 +61,18 @@ export const AppointmentList = () => {
                                 <p>Notes: {appointment.notes}</p>
                             </div>
                         </div>
+                        <dialog className="dialog" style={{ borderRadius: '0.5rem' }} open={confirmDialog}>
+                            <div>Are you sure you want to remove this appointment?</div> <br></br>
+                            <Button
+                                color="primary"
+                                onClick={(e) => setConfirmDialog(false)}
+                            >
+                                Cancel
+                            </Button>&nbsp;
+                            <Button type="button" color="danger" onClick={() => handleDeleteAppt(appointment.id)}>Confirm</Button>
+                        </dialog>
                         <Button className="mx-2" color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>
-                        <Button color="danger" onClick={() => handleDeleteAppt(appointment.id)}>Remove</Button>
+                        <Button color="danger" onClick={() => setConfirmDialog(true)}>Remove</Button>
                         <hr></hr>
                     </div>
                 )

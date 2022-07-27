@@ -17,32 +17,38 @@ export default function Login() {
     };
 
     return (
-        <Form onSubmit={loginSubmit}>
-            <fieldset>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input
-                        id="email"
-                        type="text"
-                        autoFocus
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input
-                        id="password"
-                        type="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Button>Login</Button>
-                </FormGroup>
-                <em>
-                    Not registered? <Link to="/register">Register</Link>
-                </em>
-            </fieldset>
-        </Form>
+        <div className="container h-100">
+            <div className="row h-100 justify-content-center align-items-center">
+                <div className="col-10 col-md-8 col-lg-6">
+                    <Form onSubmit={loginSubmit}>
+                        <fieldset>
+                            <FormGroup>
+                                <Label for="email">Email</Label>
+                                <Input
+                                    id="email"
+                                    type="text"
+                                    autoFocus
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="password">Password</Label>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Button color="primary">Login</Button>
+                            </FormGroup>
+                            <em>
+                                Not registered? <Link to="/register">Register</Link>
+                            </em>
+                        </fieldset>
+                    </Form>
+                </div>
+            </div>
+        </div>
     );
 }

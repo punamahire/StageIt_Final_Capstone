@@ -11,9 +11,22 @@
 }
 
 .image-div {
-    flex: 1 1;
+    flex: 0.5 1.5;
 }
 
 .content-div {
     flex: 1 1;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.profile-img {
+    margin: 5px;
+    margin-left: 20px;
+}
+
+.title-content {
+    margin-top: 5px;
 }

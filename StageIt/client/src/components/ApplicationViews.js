@@ -16,9 +16,6 @@ export default function ApplicationViews({ isLoggedIn }) {
                         index
                         element={isLoggedIn ? <StagerList /> : <Navigate to="/login" />}
                     />
-                    <Route path="/">
-                        <Route index element={isLoggedIn ? <AppointmentList /> : <Navigate to="/login" />} />
-                    </Route>
 
                     <Route path="myappointments">
                         <Route index element={isLoggedIn ? <AppointmentList /> : <Navigate to="/login" />} />

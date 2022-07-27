@@ -18,13 +18,12 @@ export default function Header({ isLoggedIn }) {
 
     return (
         <div id="nav">
-            <Navbar color="dark" light expand="md">
-                {/* <img
-                    className="d-block w-100"
-                    src="Images/Logo.jpg" width={10} height={50}
-                    alt="First slide"
-                /> */}
-                <NavbarBrand tag={RRNavLink} to="/" className="nav-link" activeclassname="active">StageIt</NavbarBrand>
+            <Navbar color="dark" expand="lg">
+                <img
+                    src="Images/LogoNew.jpg" height={100}
+                    alt="Stage It"
+                />
+                <NavbarBrand tag={RRNavLink} to="/" className="nav-link">StageIt</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>

@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 import { BootstrapCarousel } from "./BootstrapCarousel";
 import './StagerCard.css'
 
-export const StagerCard = ({ singleStager, userProfile, handleBookAppt }) => {
+export const SearchResult = ({ singleStager, userProfile, handleBookAppt }) => {
     return (
         <div className="stager-card col-sm-6">
             <div>

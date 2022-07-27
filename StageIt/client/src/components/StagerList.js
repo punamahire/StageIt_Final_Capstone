@@ -5,6 +5,7 @@ import { getAllStagers } from "../modules/stagerManager";
 import { getUserByFirebaseId } from '../modules/authManager';
 import { StagerCard } from "./StagerCard";
 import "./StagerList.css"
+import { SearchResult } from "./SearchResult";
 
 export const StagerList = () => {
     const [stagers, setStagers] = useState([]);
@@ -18,7 +19,12 @@ export const StagerList = () => {
     };
 
     const getCurrentUser = () => {
-        getUserByFirebaseId().then(user => setCurrentUser(user));
+        getUserByFirebaseId().then(user => {
+            setCurrentUser(user);
+            // now get all the stagers here 
+            getStagers();
+        });
+
     }
 
     // update state with the search input user entered
@@ -31,7 +37,7 @@ export const StagerList = () => {
     // search the stagers in the locations entered
     const handleSearchLocations = () => {
 
-        let searchResult = []
+        let searchResult = [];
         stagers.map(stager => {
 
             if (stager.locationsServed?.match(new RegExp(locationsToSearch.replace(', ', '|').replace(',', '|'), 'gi'))) {
@@ -39,18 +45,26 @@ export const StagerList = () => {
             }
         })
         setFoundStagers(searchResult);
-
         // no need to update the state here for locationsToSearch as it will clear 
         // the search input field. The user should see what locations he searched for.
     }
 
     useEffect(() => {
-        getStagers();
         getCurrentUser();
     }, [])
 
     const handleBookAppt = (stagerId) => {
         navigate(`/myappointments/add/${stagerId}`);
+    }
+
+    const handleClearSearchResult = () => {
+        // set the state to null so tha a list 
+        // of all stagers will be rendered
+        setFoundStagers(null);
+        // clear the input search field
+        setLocationsToSearch("");
+        // list the stagers on the page
+        getStagers();
     }
 
     return (
@@ -60,45 +74,37 @@ export const StagerList = () => {
                 <div className="search-div">
                     <input className="search-input mr-sm-2" type="search" placeholder="Search locations" aria-label="Search"
                         id="locations" onChange={(e) => handleInputChange(e)} required autoFocus value={locationsToSearch} />
-                    <button className="btn btn-success my-2 my-sm-0" type="submit"
-                        onClick={() => handleSearchLocations()}>Search</button>
+                    <Button className="btn btn-success my-2 my-sm-0" type="submit"
+                        onClick={() => handleSearchLocations()}>Search</Button> &nbsp;
+                    <Button color="danger" className="my-2 my-sm-0" type="submit"
+                        onClick={() => handleClearSearchResult()}>Clear</Button>
                 </div>
             </div>
 
             {/* display stagers who serve the locations searched */}
-            {foundStagers.length > 0 ?
-                foundStagers.map(stager => {
-                    return (
-                        <div className="stager-card" key={stager.id}>
-                            {stager.imageUrl ?
-                                <img src={stager.imageUrl} alt="user image" width={50}></img>
-                                :
-                                ''
-                            }
-                            <div className="stager-content">
-                                <div className="title-content">
-                                    <h3>{stager.name}</h3>
-                                    <p><strong>Locations served:</strong> {stager.locationsServed}</p>
-                                    <Button color="primary" onClick={() => handleBookAppt(stager.id)}>Book this Stager</Button>
-                                </div>
-                            </div>
-                            <hr></hr>
-                        </div>
-                    )
-                })
-                :
-                // A client should see a list of all stagers.
-                // A stager should see rest of the stagers
-                stagers.map(stager => {
-                    return (
-                        <StagerCard
-                            key={stager.id}
-                            singleStager={stager}
-                            userProfile={currentUser}
-                            handleBookAppt={handleBookAppt} />
-                    )
-                })
-            }
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
+                {foundStagers && foundStagers.length > 0 ?
+                    foundStagers.map(stager => {
+                        return (
+                            <SearchResult
+                                key={stager.id}
+                                singleStager={stager}
+                                userProfile={currentUser}
+                                handleBookAppt={handleBookAppt} />
+                        )
+                    })
+                    :
+                    stagers.map(stager => {
+                        return (
+                            <StagerCard
+                                key={stager.id}
+                                singleStager={stager}
+                                userProfile={currentUser}
+                                handleBookAppt={handleBookAppt} />
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }
