@@ -9,6 +9,7 @@ export const AppointmentList = () => {
     const [appointments, setAppointments] = useState([]);
     const [currentUser, setCurrentUser] = useState();
     const [confirmDialog, setConfirmDialog] = useState(false);
+    const [apptToDelete, setApptToDelete] = useState(null);
 
     const navigate = useNavigate();
 
@@ -36,6 +37,8 @@ export const AppointmentList = () => {
         // delete the selected appt and then show the updated list
         deleteAppointment(apptId).then(r => {
             getAppointments();
+            setApptToDelete(null);
+            setConfirmDialog(false);
         });
     }
 
@@ -61,22 +64,22 @@ export const AppointmentList = () => {
                                 <p>Notes: {appointment.notes}</p>
                             </div>
                         </div>
-                        <dialog className="dialog" style={{ borderRadius: '0.5rem' }} open={confirmDialog}>
-                            <div>Are you sure you want to remove this appointment?</div> <br></br>
-                            <Button
-                                color="primary"
-                                onClick={(e) => setConfirmDialog(false)}
-                            >
-                                Cancel
-                            </Button>&nbsp;
-                            <Button type="button" color="danger" onClick={() => handleDeleteAppt(appointment.id)}>Confirm</Button>
-                        </dialog>
                         <Button className="mx-2" color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>
-                        <Button color="danger" onClick={() => setConfirmDialog(true)}>Remove</Button>
+                        <Button color="danger" onClick={() => { setApptToDelete(appointment.id); setConfirmDialog(true) }}>Remove</Button>
                         <hr></hr>
                     </div>
                 )
             })}
+            <dialog className="dialog" style={{ borderRadius: '0.5rem' }} open={confirmDialog}>
+                <div>Are you sure you want to remove this appointment?</div> <br></br>
+                <Button
+                    color="primary"
+                    onClick={(e) => setConfirmDialog(false)}
+                >
+                    Cancel
+                </Button>&nbsp;
+                <Button type="button" color="danger" onClick={() => handleDeleteAppt(apptToDelete)}>Confirm</Button>
+            </dialog>
         </div>
     )
 }
