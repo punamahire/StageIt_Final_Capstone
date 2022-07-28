@@ -69,6 +69,12 @@ namespace StageIt.Controllers
                 userProfile);
         }
 
+        [HttpGet("search")]
+        public IActionResult Search(string q)
+        {
+            return Ok(_userProfileRepository.SearchLocations(q));
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

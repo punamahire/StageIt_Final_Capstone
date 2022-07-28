@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using StageIt.Models;
 using StageIt.Utils;
+using System;
 using System.Collections.Generic;
 
 namespace StageIt.Repositories
@@ -123,18 +124,64 @@ namespace StageIt.Repositories
             }
         }
 
-        /*
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        public List<UserProfile> SearchLocations(string locations)
         {
-            return _context.UserProfile
-                       .Include(up => up.UserType) 
-                       .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+            // split the entire locations string into individual
+            // location, remove the leading and trailing spaces if any
+            // using Trim(), and then store the locations in the array.
+            string[] splitLocations = Array.ConvertAll(locations.Split(','), loc => loc.Trim());
+
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    var sql = @"
+                  SELECT up.Id, up.FirebaseUserId, up.Name, up.Email, 
+                      up.ImageUrl AS UserProfileImageUrl,
+                      up.LocationsServed
+                  FROM Userprofile up 
+                    LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
+                  WHERE upr.RoleId = 2 AND (";
+
+                    //splitLocations loop and add each like as or condition - up.LocationsServed LIKE @Criterion
+                    //AND (up.LocationServed like Location 1 OR up.LocationServed like Location 2)
+                    // Loop over the array and add the "LIKE location" clause 
+                    // for each location with a conditional OR in between.
+                    // It would look like: up.LocationsServed LIKE '%Nashville%' OR
+                    // up.LocationsServed LIKE '%Smyrna%' OR up.LocationsServed LIKE '%Murfreesboro%'
+                    foreach (var location in splitLocations)
+                    {
+                        sql += " up.LocationsServed LIKE '%" + location + "%' ";
+                        if (location != splitLocations[splitLocations.Length - 1])
+                        {
+                            sql += " OR";
+                        }
+                    }
+                    sql += ")";
+
+                    cmd.CommandText = sql;
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var stagers = new List<UserProfile>();
+                        while (reader.Read())
+                        {
+                            stagers.Add(new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                ImageUrl = DbUtils.GetString(reader, "UserProfileImageUrl"),
+                                LocationsServed = DbUtils.GetString(reader, "LocationsServed")
+                            });
+                        }
+
+                        return stagers;
+                    }
+                }
+            }
         }
-        public void Add(UserProfile userProfile)
-        {
-            _context.Add(userProfile);
-            _context.SaveChanges();
-        }
-        */
     }
 }

@@ -8,5 +8,6 @@ namespace StageIt.Repositories
         void Add(UserProfile userProfile);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         List<UserProfile> GetAllStagers();
+        List<UserProfile> SearchLocations(string locations);
     }
 }

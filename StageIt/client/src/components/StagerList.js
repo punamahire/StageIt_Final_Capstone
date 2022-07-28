@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { getAllStagers } from "../modules/stagerManager";
+import { getAllStagers, searchByLocations } from "../modules/stagerManager";
 import { getUserByFirebaseId } from '../modules/authManager';
 import { StagerCard } from "./StagerCard";
 import "./StagerList.css"
-import { SearchResult } from "./SearchResult";
 
 export const StagerList = () => {
     const [stagers, setStagers] = useState([]);
     const [locationsToSearch, setLocationsToSearch] = useState("");
-    const [foundStagers, setFoundStagers] = useState([]);
     const [currentUser, setCurrentUser] = useState();
     const navigate = useNavigate();
 
@@ -36,17 +34,7 @@ export const StagerList = () => {
 
     // search the stagers in the locations entered
     const handleSearchLocations = () => {
-
-        let searchResult = [];
-        stagers.map(stager => {
-
-            if (stager.locationsServed?.match(new RegExp(locationsToSearch.replace(', ', '|').replace(',', '|'), 'gi'))) {
-                searchResult.push(stager);
-            }
-        })
-        setFoundStagers(searchResult);
-        // no need to update the state here for locationsToSearch as it will clear 
-        // the search input field. The user should see what locations he searched for.
+        searchByLocations(locationsToSearch).then(stagersFound => setStagers(stagersFound));
     }
 
     useEffect(() => {
@@ -58,9 +46,6 @@ export const StagerList = () => {
     }
 
     const handleClearSearchResult = () => {
-        // set the state to null so tha a list 
-        // of all stagers will be rendered
-        setFoundStagers(null);
         // clear the input search field
         setLocationsToSearch("");
         // list the stagers on the page
@@ -81,19 +66,12 @@ export const StagerList = () => {
                 </div>
             </div>
 
-            {/* display stagers who serve the locations searched */}
+            {/* StagerCard displays the search result with stagers found for the 
+                locations searched. The search result replaces the default view 
+                of all stagers. The Clear button re-renders the all stagers view.
+              */}
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
-                {foundStagers && foundStagers.length > 0 ?
-                    foundStagers.map(stager => {
-                        return (
-                            <SearchResult
-                                key={stager.id}
-                                singleStager={stager}
-                                userProfile={currentUser}
-                                handleBookAppt={handleBookAppt} />
-                        )
-                    })
-                    :
+                {(stagers && stagers.length > 0) ?
                     stagers.map(stager => {
                         return (
                             <StagerCard
@@ -103,6 +81,8 @@ export const StagerList = () => {
                                 handleBookAppt={handleBookAppt} />
                         )
                     })
+                    :
+                    <div><p>Sorry, No Results Found. Try searching another location.</p></div>
                 }
             </div>
         </div>

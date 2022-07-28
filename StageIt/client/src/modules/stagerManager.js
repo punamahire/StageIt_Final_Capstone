@@ -13,3 +13,15 @@ export const getAllStagers = () => {
             .then((res) => res.json());
     })
 };
+
+export const searchByLocations = (locations) => {
+    return getToken().then((token) => {
+        return fetch(_apiUrl + '/search?q=' + locations, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => res.json())
+    });
+};
