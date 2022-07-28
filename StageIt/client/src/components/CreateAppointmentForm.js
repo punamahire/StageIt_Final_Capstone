@@ -7,9 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 export const CreateAppointmentForm = () => {
 
     const [currentUser, setCurrentUser] = useState();
-    const { id } = useParams();
+    const { stagerId } = useParams();
     const navigate = useNavigate();
 
+    // initialize the appointment state with default values
     const [appointment, setAppointment] = useState({
         userProfileId: 0,
         stagerId: 0,
@@ -31,7 +32,8 @@ export const CreateAppointmentForm = () => {
     const handleInputChange = (event) => {
         const apptCopy = { ...appointment }
         apptCopy.userProfileId = currentUser.Id;
-        apptCopy.stagerId = id;
+        // assign the stagerId we got from the url
+        apptCopy.stagerId = stagerId;
 
         apptCopy[event.target.id] = event.target.value;
         setAppointment(apptCopy);
@@ -39,6 +41,7 @@ export const CreateAppointmentForm = () => {
 
     const handleCancel = (event) => {
         event.preventDefault();
+        // navigate the user to all stagers view
         navigate("/");
     }
 

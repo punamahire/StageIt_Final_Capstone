@@ -25,12 +25,11 @@ export const StagerCard = ({ singleStager, userProfile, handleBookAppt }) => {
                     <div className="title-content content-div">
                         <h3>{singleStager.name}</h3>
                         <p><strong>Locations served:</strong> {singleStager.locationsServed}</p>
-                        {/* <Link to={`/stagingimages/${singleStager.id}/images`} className="btn btn-primary">
-                            See my work
-                        </Link> */}
+
                         {/* A client should see a list of all stagers.
                             A stager should also see all stagers but 
-                            should not see the Make Appointment button */}
+                            should not see the Make Appointment button 
+                            on his own profile */}
                         {userProfile.id !== singleStager.id &&
                             <Button color="primary" onClick={() => handleBookAppt(singleStager.id)}>Make Appointment</Button>
                         }

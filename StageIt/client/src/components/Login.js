@@ -11,6 +11,7 @@ export default function Login() {
 
     const loginSubmit = (e) => {
         e.preventDefault();
+        // upon login navigate the user to his appointments
         login(email, password)
             .then(() => navigate("/myappointments"))
             .catch(() => alert("Invalid email or password"));

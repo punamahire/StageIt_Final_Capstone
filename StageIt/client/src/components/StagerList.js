@@ -13,26 +13,27 @@ export const StagerList = () => {
     const navigate = useNavigate();
 
     const getStagers = () => {
+        // get all the stagers from the database
         getAllStagers().then(stagersFromAPI => setStagers(stagersFromAPI));
     };
 
     const getCurrentUser = () => {
         getUserByFirebaseId().then(user => {
             setCurrentUser(user);
-            // now get all the stagers here 
+            // we get the stagers and update state here after getting
+            // and updating the currentUser so as to ensure we always
+            // have the currentUser (or userProfile) in StagerCard.
             getStagers();
         });
-
     }
 
-    // update state with the search input user entered
+    // update state with the search input 
     const handleInputChange = (event) => {
-
         let locations = event.target.value;
         setLocationsToSearch(locations);
     }
 
-    // search the stagers in the locations entered
+    // search the stagers based on the input locations 
     const handleSearchLocations = () => {
         searchByLocations(locationsToSearch).then(stagersFound => setStagers(stagersFound));
     }
@@ -48,29 +49,30 @@ export const StagerList = () => {
     const handleClearSearchResult = () => {
         // clear the input search field
         setLocationsToSearch("");
-        // list the stagers on the page
+        // re-render the all stagers view
         getStagers();
     }
 
     return (
         <div className="stager-container">
             <div className="title-search-div">
-                <h1>List of Stagers</h1>
+                <h1>Stagers</h1>
                 <div className="search-div">
-                    <input className="search-input mr-sm-2" type="search" placeholder="Search locations" aria-label="Search"
+                    <input className="search-input mr-sm-2" type="search" placeholder="Search locations..." aria-label="Search"
                         id="locations" onChange={(e) => handleInputChange(e)} required autoFocus value={locationsToSearch} />
-                    <Button className="btn btn-success my-2 my-sm-0" type="submit"
+                    <Button className="btn btn-success my-2" type="submit"
                         onClick={() => handleSearchLocations()}>Search</Button> &nbsp;
-                    <Button color="danger" className="my-2 my-sm-0" type="submit"
+                    <Button color="danger" className="my-2" type="submit"
                         onClick={() => handleClearSearchResult()}>Clear</Button>
                 </div>
             </div>
 
             {/* StagerCard displays the search result with stagers found for the 
-                locations searched. The search result replaces the default view 
-                of all stagers. The Clear button re-renders the all stagers view.
+                matching locations. The search result replaces the default view 
+                of all stagers. The Clear button re-renders the all stagers view 
+                by replacing the search result view.
               */}
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2 mt-2">
                 {(stagers && stagers.length > 0) ?
                     stagers.map(stager => {
                         return (

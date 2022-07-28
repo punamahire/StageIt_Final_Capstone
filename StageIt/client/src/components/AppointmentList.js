@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { getMyAppointments, deleteAppointment } from "../modules/appointmentManager";
 import Moment from 'moment';
+import { getMyAppointments, deleteAppointment } from "../modules/appointmentManager";
 import { getUserByFirebaseId } from "../modules/authManager";
 
 export const AppointmentList = () => {
@@ -14,6 +14,7 @@ export const AppointmentList = () => {
     const navigate = useNavigate();
 
     const getCurrentUser = () => {
+        // first, get the user and then his appointments
         getUserByFirebaseId().then(user => {
             setCurrentUser(user);
 
@@ -35,9 +36,13 @@ export const AppointmentList = () => {
 
     const handleDeleteAppt = (apptId) => {
         // delete the selected appt and then show the updated list
-        deleteAppointment(apptId).then(r => {
+        deleteAppointment(apptId).then(resp => {
             getAppointments();
+            // clear the component state as we already deleted this 
+            // appointment from the database
             setApptToDelete(null);
+            // we do not want to display the confirm dialog box for 
+            // other appointments so, set it to false.
             setConfirmDialog(false);
         });
     }
@@ -48,23 +53,25 @@ export const AppointmentList = () => {
 
     return (
         <div className="appointment-container mx-3 h-100">
-            <h1>Appointments List</h1>
+            <h1>Appointments</h1>
             {appointments.map(appointment => {
                 return (
                     <div className="appointment-card mb-3" key={appointment.id}>
                         <div className="appointment-content">
                             <div className="title-content">
+                                {/* display the name on the appointment based on the 
+                                    role of the current logged in user */}
                                 {(currentUser && currentUser.roleId == 1) ?
                                     <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
                                     :
                                     <h3>Client's Name: {appointment.userProfile?.name}</h3>
                                 }
-                                <p>Appointment Date: {Moment(appointment.appointmentTime).format('MMMM Do, YYYY H:mm a')}</p>
-                                <p>Address: {appointment.address}</p>
-                                <p>Notes: {appointment.notes}</p>
+                                <p><strong>Appointment Date:</strong> {Moment(appointment.appointmentTime).format('MMMM Do, YYYY H:mm a')}</p>
+                                <p><strong>Address:</strong> {appointment.address}</p>
+                                <p><strong>Notes:</strong> {appointment.notes}</p>
                             </div>
                         </div>
-                        <Button className="mx-2" color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>
+                        <Button color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>&nbsp;
                         <Button color="danger" onClick={() => { setApptToDelete(appointment.id); setConfirmDialog(true) }}>Remove</Button>
                         <hr></hr>
                     </div>
@@ -72,13 +79,8 @@ export const AppointmentList = () => {
             })}
             <dialog className="dialog" style={{ borderRadius: '0.5rem' }} open={confirmDialog}>
                 <div>Are you sure you want to remove this appointment?</div> <br></br>
-                <Button
-                    color="primary"
-                    onClick={(e) => setConfirmDialog(false)}
-                >
-                    Cancel
-                </Button>&nbsp;
-                <Button type="button" color="danger" onClick={() => handleDeleteAppt(apptToDelete)}>Confirm</Button>
+                <Button color="primary" onClick={(e) => setConfirmDialog(false)}>Cancel</Button>&nbsp;
+                <Button color="danger" onClick={() => handleDeleteAppt(apptToDelete)}>Confirm</Button>
             </dialog>
         </div>
     )

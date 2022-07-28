@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 export const EditAppointmentForm = () => {
 
     const [appointment, setAppointment] = useState({});
+    // get the appointment id from the url
     const { appointmentId } = useParams();
     const navigate = useNavigate();
 
@@ -21,6 +22,9 @@ export const EditAppointmentForm = () => {
     const handleEditAppointment = (event) => {
         event.preventDefault();
 
+        // assign the values from the react state to a new object.
+        // some properties won't change (like the ids),
+        // some are fetched from the edit form.
         const editedAppointment = {
             id: appointmentId,
             userProfileId: appointment.userProfileId,
@@ -30,8 +34,11 @@ export const EditAppointmentForm = () => {
             notes: appointment.notes
         };
 
+        // after updating the appointment in the DB,
+        // navigate the user back to the updated list
+        // of appointments
         editAppointment(editedAppointment)
-            .then(r => navigate('/myappointments'));
+            .then(resp => navigate('/myappointments'));
     }
 
     const handleInputChange = (event) => {
@@ -61,7 +68,7 @@ export const EditAppointmentForm = () => {
                     <Label for="notes">Notes</Label>
                     <Input type="textarea" name="notes" id="notes" placeholder="Any Notes..." defaultValue={appointment.notes} onChange={handleInputChange} />
                 </FormGroup>
-                <Button className="mx-2" color="primary" onClick={handleEditAppointment}>Update</Button>
+                <Button color="primary" onClick={handleEditAppointment}>Update</Button>&nbsp;
                 <Button color="secondary" onClick={handleCancel}>Cancel</Button>
             </Form>
         </div>

@@ -3,11 +3,11 @@
 }
 
 h1 {
-    flex: 1 1;
+    flex: 0.5 0.5;
 }
 
 .search-div {
-    flex: 1 1;
+    flex: 1.5 1.5;
 }
 
 .search-div {
@@ -18,5 +18,7 @@ h1 {
 
 .search-input {
     margin-right: 0.25em;
+    margin-top: 0.5em;
     width: 218px;
+    height: 2.5em;
 }

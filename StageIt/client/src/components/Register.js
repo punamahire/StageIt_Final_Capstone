@@ -19,6 +19,9 @@ export default function Register() {
         if (password && password !== confirmPassword) {
             alert("Passwords don't match. Do better.");
         } else {
+            // When a user registers, add a new userProfile
+            // object to the DB and navigate the user to 
+            // the stagers-list view 
             const userProfile = {
                 name,
                 imageUrl,

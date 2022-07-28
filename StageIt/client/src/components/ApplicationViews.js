@@ -19,15 +19,9 @@ export default function ApplicationViews({ isLoggedIn }) {
 
                     <Route path="myappointments">
                         <Route index element={isLoggedIn ? <AppointmentList /> : <Navigate to="/login" />} />
-                        <Route path="add/:id" element={<CreateAppointmentForm />} />
+                        <Route path="add/:stagerId" element={<CreateAppointmentForm />} />
                         <Route path="edit/:appointmentId" element={<EditAppointmentForm />} />
-                        {/* <Route path=":id" element={<AppointmentDetails />} />
-                        <Route path="delete/:id" element={<DeleteAppointment />} /> */}
                     </Route>
-
-                    {/* <Route path="stagingimages">
-                        <Route exact path="/stagingimages/:stagerId/images" element={<StagingImages />} />
-                    </Route> */}
 
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
