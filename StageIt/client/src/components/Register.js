@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useNavigate } from "react-router-dom";
 import { register } from "../modules/authManager";
+import "./Form.css"
 
 export default function Register() {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function Register() {
     };
 
     return (
-        <div className="container h-100">
+        <div className="container form-container">
             <div className="row h-100 justify-content-center align-items-center">
                 <div className="col-10 col-md-8 col-lg-6">
                     <h1>Register</h1>

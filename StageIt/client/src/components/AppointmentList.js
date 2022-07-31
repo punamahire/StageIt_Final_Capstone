@@ -52,7 +52,7 @@ export const AppointmentList = () => {
     }, []);
 
     return (
-        <div className="appointment-container pl-2 h-100">
+        <div className="appointment-container pl-2">
             <h1>Appointments</h1>
             {appointments.map(appointment => {
                 return (

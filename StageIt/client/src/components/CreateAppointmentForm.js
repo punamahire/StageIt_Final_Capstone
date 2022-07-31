@@ -4,6 +4,7 @@ import { addAppointment, getMyAppointments } from '../modules/appointmentManager
 import { getUserByFirebaseId, getUserProfileById } from '../modules/authManager';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
+import "./Form.css"
 
 export const CreateAppointmentForm = () => {
 
@@ -37,31 +38,38 @@ export const CreateAppointmentForm = () => {
         event.preventDefault();
         appointment.userProfileId = currentUser.id;
 
-        let errorP = false;
+        let timeOverlap = false;
 
         if (appointment.address === "" || appointment.appointmentTime === "") {
             setInvalidInput(true);
         }
         else {
+            // If the selected time overlaps with any of the appts 
+            // of the stager, flash an error message to the
+            // user to choose another time. 
             getMyAppointments(appointment.stagerId, 2)
                 .then(apptsFromAPI => {
                     for (let stgAppt of apptsFromAPI) {
-                        console.log(`stager appt time: ${stgAppt.appointmentTime}, new appt time: ${appointment.appointmentTime}`);
+                        if (!timeOverlap) {
+                            const duration = moment.duration(moment(appointment.appointmentTime).diff(stgAppt.appointmentTime));
+                            var timeDiff = duration.asHours();
 
-                        console.log('------------------------');
-                        console.log(moment(stgAppt.appointmentTime).diff(appointment.appointmentTime, 'hour'))
-                        const timeDiff = moment(stgAppt.appointmentTime).diff(appointment.appointmentTime, 'hour');
-                        if (timeDiff > 0 && timeDiff < 2) {
-                            console.log("inside if");
-                            setErrorPresent(true);
-                            errorP = true;
-                            break;
+                            // the time selected should have a difference
+                            // of 2 hours or more, from existing appointments
+                            // of this stager.
+                            if (timeDiff >= 0 && timeDiff < 2) {
+                                setErrorPresent(true);
+                                timeOverlap = true;
+                                break;
+                            }
                         }
                     }
 
-                    if (!errorP) {
-                        addAppointment(appointment).then(resp => navigate('/myappointments'));
-                        setErrorPresent(false);
+                    if (!timeOverlap) {
+                        addAppointment(appointment).then(resp => {
+                            setErrorPresent(false);
+                            navigate('/myappointments');
+                        });
                     }
                 });
         }
@@ -96,7 +104,7 @@ export const CreateAppointmentForm = () => {
     }, [])
 
     return (
-        <div className="container col-sm-6">
+        <div className="container col-sm-6 form-container">
             <div className='my-2'>
                 {userProfile &&
                     <h2>Appointment with {userProfile.name}</h2>

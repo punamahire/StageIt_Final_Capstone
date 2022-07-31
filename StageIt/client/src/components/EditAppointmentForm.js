@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { editAppointment, getAppointmentById } from '../modules/appointmentManager';
+import { editAppointment, getAppointmentById, getMyAppointments } from '../modules/appointmentManager';
 import { getUserProfileById, getUserByFirebaseId } from '../modules/authManager';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
+import "./Form.css"
 
 export const EditAppointmentForm = () => {
 
     const [appointment, setAppointment] = useState({});
     const [userProfile, setUserProfile] = useState();
+    const [errorPresent, setErrorPresent] = useState(false);
     const [invalidInput, setInvalidInput] = useState(false);
     // get the appointment id from the url
     const { appointmentId } = useParams();
@@ -38,6 +40,8 @@ export const EditAppointmentForm = () => {
 
     const handleEditAppointment = (event) => {
         event.preventDefault();
+        let timeOverlap = false;
+
         if (appointment.address === "" || appointment.appointmentTime === "") {
             setInvalidInput(true);
         }
@@ -56,11 +60,39 @@ export const EditAppointmentForm = () => {
                 notes: appointment.notes
             };
 
-            // after updating the appointment in the DB,
-            // navigate the user back to the updated list
-            // of appointments
-            editAppointment(editedAppointment)
-                .then(resp => navigate('/myappointments'));
+            // If the selected time overlaps with any of the appts 
+            // of the stager, flash an error message to the
+            // user to choose another time.
+            getMyAppointments(appointment.stagerId, 2)
+                .then(apptsFromAPI => {
+                    for (let stgAppt of apptsFromAPI) {
+                        if (!timeOverlap) {
+                            const duration = moment.duration(moment(appointment.appointmentTime).diff(stgAppt.appointmentTime));
+                            var timeDiff = duration.asHours();
+
+                            // the time selected should have a difference
+                            // of 2 hours or more, from existing appointments
+                            // of this stager.
+                            if (timeDiff >= 0 && timeDiff < 2) {
+                                setErrorPresent(true);
+                                timeOverlap = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!timeOverlap) {
+                        // after updating the appointment in the DB,
+                        // navigate the user back to the updated list
+                        // of appointments
+                        editAppointment(editedAppointment)
+                            .then(resp => {
+                                setErrorPresent(false);
+                                navigate('/myappointments');
+                            });
+                    }
+                });
+
         }
     }
 
@@ -83,7 +115,7 @@ export const EditAppointmentForm = () => {
     }, [])
 
     return (
-        <div className="container col-sm-6">
+        <div className="container col-sm-6 form-container">
             <div className='my-2'>
                 <h1>Update Appointment</h1>
                 {userProfile &&
@@ -91,6 +123,7 @@ export const EditAppointmentForm = () => {
                 }
             </div>
             <Form>
+                {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
                 {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
                 <FormGroup>
                     <Label for="appointmentTime">Appointment Time</Label>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../modules/authManager";
+import "./Form.css"
 
 export default function Login() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function Login() {
     };
 
     return (
-        <div className="container h-100">
+        <div className="container form-container">
             <div className="row h-100 justify-content-center align-items-center">
                 <div className="col-10 col-md-8 col-lg-6">
                     <h1>Login</h1>
