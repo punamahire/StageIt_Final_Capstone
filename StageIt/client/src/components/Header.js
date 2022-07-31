@@ -27,10 +27,12 @@ export default function Header({ isLoggedIn }) {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
-                        { /* Home link should render irrespective of user login */}
-                        <NavItem>
-                            <NavLink tag={RRNavLink} to="/">Home</NavLink>
-                        </NavItem>
+                        { /* When isLoggedIn === true, we will render the Home link */}
+                        {isLoggedIn &&
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                            </NavItem>
+                        }
                     </Nav>
                     <Nav navbar>
                         {isLoggedIn &&

@@ -6,6 +6,7 @@ import ApplicationViews from "./components/ApplicationViews";
 import { onLoginStatusChange } from "./modules/authManager";
 import { Container } from "react-bootstrap"
 import './App.css';
+import Footer from './components/Footer';
 
 export const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -24,6 +25,7 @@ export const App = () => {
       <Container className="bg-color-container">
         <ApplicationViews isLoggedIn={isLoggedIn} />
       </Container>
+      <Footer />
     </Router>
   );
 }
