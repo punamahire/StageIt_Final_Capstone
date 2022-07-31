@@ -17,6 +17,7 @@ namespace StageIt.Models
         [MaxLength(255)]
         public string Address { get; set; }
         public string Notes { get; set; }
+        public Boolean IsFurnished { get; set; }
 
         public UserProfile UserProfile { get; set; }
         public UserProfile StagerProfile { get; set; }

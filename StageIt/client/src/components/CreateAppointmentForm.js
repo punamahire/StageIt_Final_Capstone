@@ -7,8 +7,8 @@ import moment from 'moment';
 
 export const CreateAppointmentForm = () => {
 
-    const [currentUser, setCurrentUser] = useState();
-    const [userProfile, setUserProfile] = useState();
+    const [currentUser, setCurrentUser] = useState({});
+    const [userProfile, setUserProfile] = useState({});
     const { stagerId } = useParams();
     const [errorPresent, setErrorPresent] = useState(false);
     const [invalidInput, setInvalidInput] = useState(false);
@@ -20,6 +20,7 @@ export const CreateAppointmentForm = () => {
         stagerId: 0,
         appointmentTime: '',
         address: '',
+        isFurnished: false,
         notes: '',
     })
 
@@ -34,6 +35,7 @@ export const CreateAppointmentForm = () => {
     const handleCreateAppointment = (event) => {
         event.preventDefault();
         appointment.userProfileId = currentUser.id;
+
         let errorP = false;
 
         if (appointment.address === "" || appointment.appointmentTime === "") {
@@ -74,6 +76,13 @@ export const CreateAppointmentForm = () => {
         setAppointment(apptCopy);
     }
 
+    const handleOptionChange = (event) => {
+        const apptCopy = { ...appointment }
+
+        apptCopy.isFurnished = event.target.value === 'true';
+        setAppointment(apptCopy);
+    }
+
     const handleCancel = (event) => {
         event.preventDefault();
         // navigate the user to all stagers view
@@ -105,6 +114,18 @@ export const CreateAppointmentForm = () => {
                     <Label for="address">Address</Label>
                     <Input type="text" name="address" id="address" placeholder="Staging Address"
                         onChange={handleInputChange} required />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="furnished">Is Home Furnished or Vacant?</Label>
+                    {/* Furnished is checked when its value is "true"
+                        Vacant is checked when its value if "false"
+                        Note: true and false are string values here */}
+                    <div>
+                        <Input type="radio" name="radioGroup" value="true"
+                            onChange={handleOptionChange} /> Furnished &nbsp;
+                        <Input type="radio" name="radioGroup" value="false" defaultChecked
+                            onChange={handleOptionChange} /> Vacant
+                    </div>
                 </FormGroup>
                 <FormGroup>
                     <Label for="notes">Notes</Label>

@@ -17,7 +17,6 @@ export const EditAppointmentForm = () => {
     const getAppointment = () => {
         getAppointmentById(appointmentId).then(apptFromAPI => {
             setAppointment(apptFromAPI);
-
             getUserByFirebaseId().then(user => {
                 // get the appropriate userprofile to display his/her name on top of the edit form.
                 // if current user is client - get stager's profile to display name on the form
@@ -43,7 +42,6 @@ export const EditAppointmentForm = () => {
             setInvalidInput(true);
         }
         else {
-
             // assign the values from the react state to a new object.
             // some properties won't change (like the ids),
             // some are fetched from the edit form.
@@ -53,6 +51,7 @@ export const EditAppointmentForm = () => {
                 stagerId: appointment.stagerId,
                 appointmentTime: appointment.appointmentTime,
                 address: appointment.address,
+                isFurnished: appointment.isFurnished,
                 notes: appointment.notes
             };
 
@@ -68,6 +67,13 @@ export const EditAppointmentForm = () => {
         const apptCopy = { ...appointment }
 
         apptCopy[event.target.id] = event.target.value;
+        setAppointment(apptCopy);
+    }
+
+    const handleOptionChange = (event) => {
+        const apptCopy = { ...appointment }
+
+        apptCopy.isFurnished = event.target.value === 'true';
         setAppointment(apptCopy);
     }
 
@@ -96,6 +102,20 @@ export const EditAppointmentForm = () => {
                     <Input type="text" name="address" id="address" placeholder="Staging Address"
                         value={appointment.address ? appointment.address : ''}
                         onChange={handleInputChange} required />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="furnished">Is Home Furnished or Vacant?</Label>
+                    {/* Since, the radio button values are of type string "true" or
+                        "false", we used toString() to compare. The appointment object
+                        has isFurnished as a boolean. */}
+                    <div>
+                        <Input type="radio" name="radioGroup" value="true"
+                            checked={appointment.isFurnished?.toString() === 'true'}
+                            onChange={handleOptionChange} /> Furnished &nbsp;
+                        <Input type="radio" name="radioGroup" value="false"
+                            checked={appointment.isFurnished?.toString() === 'false'}
+                            onChange={handleOptionChange} /> Vacant
+                    </div>
                 </FormGroup>
                 <FormGroup>
                     <Label for="notes">Notes</Label>

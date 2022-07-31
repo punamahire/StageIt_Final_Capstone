@@ -70,6 +70,11 @@ export const AppointmentList = () => {
                             <div className="title-content">
                                 <p><strong>Appointment Date:</strong> {Moment(appointment.appointmentTime).format('MMMM Do, YYYY @ h:mm a')}</p>
                                 <p><strong>Address:</strong> {appointment.address}</p>
+                                {appointment.isFurnished ?
+                                    <p><strong>House Vacant or Furnished:</strong> Furnished</p>
+                                    :
+                                    <p><strong>House Vacant or Furnished:</strong> Vacant</p>
+                                }
                                 <p><strong>Notes:</strong> {appointment.notes}</p>
                             </div>
                         </div>
