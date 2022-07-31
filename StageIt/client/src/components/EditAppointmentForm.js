@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { editAppointment, getAppointmentById } from '../modules/appointmentManager';
-import { getUserProfileById } from '../modules/authManager';
+import { getUserProfileById, getUserByFirebaseId } from '../modules/authManager';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
@@ -17,7 +17,18 @@ export const EditAppointmentForm = () => {
     const getAppointment = () => {
         getAppointmentById(appointmentId).then(apptFromAPI => {
             setAppointment(apptFromAPI);
-            getUserProfileById(apptFromAPI.stagerId).then(stager => setUserProfile(stager));
+
+            getUserByFirebaseId().then(user => {
+                // get the appropriate userprofile to display his/her name on top of the edit form.
+                // if current user is client - get stager's profile to display name on the form
+                // if current user is stager - get client's profile to display name on the form
+                if (apptFromAPI.userProfileId === user.id) {
+                    getUserProfileById(apptFromAPI.stagerId).then(stager => setUserProfile(stager));
+                }
+                else {
+                    getUserProfileById(apptFromAPI.userProfileId).then(client => setUserProfile(client));
+                }
+            });
         });
     }
 
