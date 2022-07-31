@@ -49,31 +49,34 @@ export const AppointmentList = () => {
 
     useEffect(() => {
         getCurrentUser();
-    }, [])
+    }, []);
 
     return (
-        <div className="appointment-container mx-3 h-100">
+        <div className="appointment-container pl-2 h-100">
             <h1>Appointments</h1>
             {appointments.map(appointment => {
                 return (
-                    <div className="appointment-card mb-3" key={appointment.id}>
-                        <div className="appointment-content">
-                            <div className="title-content">
-                                {/* display the name on the appointment based on the 
+                    <div className="appointment-card card-color my-3" key={appointment.id}>
+                        <div className="card-header card-header-footer-color p-2">
+                            {/* display the name on the appointment based on the 
                                     role of the current logged in user */}
-                                {(currentUser && currentUser.roleId == 1) ?
-                                    <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
-                                    :
-                                    <h3>Client's Name: {appointment.userProfile?.name}</h3>
-                                }
-                                <p><strong>Appointment Date:</strong> {Moment(appointment.appointmentTime).format('MMMM Do, YYYY H:mm a')}</p>
+                            {(currentUser && currentUser.roleId == 1) ?
+                                <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
+                                :
+                                <h3>Client's Name: {appointment.userProfile?.name}</h3>
+                            }
+                        </div>
+                        <div className="appointment-content p-2">
+                            <div className="title-content">
+                                <p><strong>Appointment Date:</strong> {Moment(appointment.appointmentTime).format('MMMM Do, YYYY @ h:mm a')}</p>
                                 <p><strong>Address:</strong> {appointment.address}</p>
                                 <p><strong>Notes:</strong> {appointment.notes}</p>
                             </div>
                         </div>
-                        <Button color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>&nbsp;
-                        <Button color="danger" onClick={() => { setApptToDelete(appointment.id); setConfirmDialog(true) }}>Remove</Button>
-                        <hr></hr>
+                        <div className="card-footer card-header-footer-color footer-btns p-2">
+                            <Button color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>&nbsp;
+                            <Button color="danger" onClick={() => { setApptToDelete(appointment.id); setConfirmDialog(true) }}>Remove</Button>
+                        </div>
                     </div>
                 )
             })}

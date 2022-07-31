@@ -30,7 +30,7 @@ export const StagerCard = ({ singleStager, userProfile, handleBookAppt }) => {
                             A stager should also see all stagers but 
                             should not see the Make Appointment button 
                             on his own profile */}
-                        {userProfile.id !== singleStager.id &&
+                        {(userProfile && userProfile.id !== singleStager.id) &&
                             <Button color="primary" onClick={() => handleBookAppt(singleStager.id)}>Make Appointment</Button>
                         }
                     </div>

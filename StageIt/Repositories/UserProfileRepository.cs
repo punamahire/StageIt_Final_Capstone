@@ -124,6 +124,41 @@ namespace StageIt.Repositories
             }
         }
 
+        public UserProfile GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT up.Id, up.Name as UserName, up.FirebaseUserId,
+                                               up.Email, up.ImageUrl, up.LocationsServed,
+                                               upr.RoleId 
+                                          FROM UserProfile up
+                                     LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
+                                         WHERE up.Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    var reader = cmd.ExecuteReader();
+                    UserProfile userProfile = null;
+                    if (reader.Read())
+                    {
+                        userProfile = new UserProfile()
+                        {                           
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                            Name = DbUtils.GetString(reader, "UserName"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            LocationsServed = DbUtils.GetString(reader, "LocationsServed"),
+                            RoleId = DbUtils.GetInt(reader, "RoleId")
+                        };
+                    }
+                    return userProfile;
+                }
+            }
+        }
+
         public List<UserProfile> SearchLocations(string locations)
         {
             // split the entire locations string into individual

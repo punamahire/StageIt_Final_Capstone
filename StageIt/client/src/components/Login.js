@@ -21,6 +21,7 @@ export default function Login() {
         <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
                 <div className="col-10 col-md-8 col-lg-6">
+                    <h1>Login</h1>
                     <Form onSubmit={loginSubmit}>
                         <fieldset>
                             <FormGroup>
@@ -29,6 +30,7 @@ export default function Login() {
                                     id="email"
                                     type="text"
                                     autoFocus
+                                    placeholder="Enter email"
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </FormGroup>
@@ -37,6 +39,7 @@ export default function Login() {
                                 <Input
                                     id="password"
                                     type="password"
+                                    placeholder="Enter password"
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </FormGroup>

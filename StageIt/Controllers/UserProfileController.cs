@@ -59,6 +59,17 @@ namespace StageIt.Controllers
             return Ok();
         }
 
+        [HttpGet("GetUserById")]
+        public IActionResult GetById(int id)
+        {
+            var userProfile = _userProfileRepository.GetById(id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
         {

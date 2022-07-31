@@ -23,6 +23,18 @@ export const getUserByFirebaseId = () => {
         }).then(res => res.json()));
 }
 
+export const getUserProfileById = (id) => {
+    return getToken().then((token) => {
+        return fetch(_apiUrl + '/getuserbyid?id=' + id, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(res => res.json())
+    })
+};
+
 const _saveUser = (userProfile) => {
     return getToken().then((token) =>
         fetch(_apiUrl, {
