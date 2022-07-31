@@ -18,6 +18,7 @@ namespace StageIt.Models
         public string Address { get; set; }
         public string Notes { get; set; }
         public Boolean IsFurnished { get; set; }
+        public int Rooms { get; set; }
 
         public UserProfile UserProfile { get; set; }
         public UserProfile StagerProfile { get; set; }

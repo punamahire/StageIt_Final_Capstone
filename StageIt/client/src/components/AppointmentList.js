@@ -75,6 +75,7 @@ export const AppointmentList = () => {
                                     :
                                     <p><strong>House Vacant or Furnished:</strong> Vacant</p>
                                 }
+                                <p><strong>Number of Rooms:</strong> {appointment.rooms}</p>
                                 <p><strong>Notes:</strong> {appointment.notes}</p>
                             </div>
                         </div>

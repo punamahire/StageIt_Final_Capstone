@@ -20,7 +20,7 @@ namespace StageIt.Repositories
                     {
                         cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
                                                a.AppointmentTime, a.Address, a.Notes,
-                                               a.IsFurnished,
+                                               a.IsFurnished, a.Rooms,
                                                up.Name AS UserName, stg.Name AS StagerName                                              
                                           FROM Appointment a
                                      LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
@@ -32,7 +32,7 @@ namespace StageIt.Repositories
                     {
                         cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
                                                a.AppointmentTime, a.Address, a.Notes,
-                                               a.IsFurnished,
+                                               a.IsFurnished, a.Rooms,
                                                up.Name AS UserName, stg.Name AS StagerName                                              
                                           FROM Appointment a
                                      LEFT JOIN UserProfile up ON a.UserProfileId = up.Id
@@ -57,6 +57,8 @@ namespace StageIt.Repositories
                                 Address = DbUtils.GetString(reader, "Address"),
                                 Notes = DbUtils.GetString(reader, "Notes"),
                                 IsFurnished = DbUtils.GetBoolean(reader, "IsFurnished"),
+                                Rooms = DbUtils.GetInt(reader, "Rooms"),
+
                                 UserProfile = new UserProfile()
                                 {
                                     Id = DbUtils.GetInt(reader, "UserProfileId"),
@@ -84,7 +86,7 @@ namespace StageIt.Repositories
                 {
                     cmd.CommandText = @"SELECT a.Id, a.UserProfileId, a.StagerId, 
                                                a.AppointmentTime, a.Address, a.Notes,
-                                               a.IsFurnished,
+                                               a.IsFurnished, a.Rooms,
                                                up.Name as UserName, up.FirebaseUserId,
                                                up.Email, up.ImageUrl,
                                                upr.RoleId 
@@ -107,6 +109,7 @@ namespace StageIt.Repositories
                             Address = DbUtils.GetString(reader, "Address"),
                             Notes = DbUtils.GetString(reader, "Notes"),
                             IsFurnished = DbUtils.GetBoolean(reader, "IsFurnished"),
+                            Rooms = DbUtils.GetInt(reader, "Rooms"),
 
                             UserProfile = new UserProfile()
                             {
@@ -134,16 +137,17 @@ namespace StageIt.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO Appointment (UserProfileId, StagerId,  
                                                            AppointmentTime, Address, 
-                                                           Notes, IsFurnished)
+                                                           Notes, IsFurnished, Rooms)
                                         OUTPUT INSERTED.ID
                                         VALUES (@UserProfileId, @StagerId,  
-                                                @AppointmentTime, @Address, @Notes, @IsFurnished)";
+                                                @AppointmentTime, @Address, @Notes, @IsFurnished, @Rooms)";
                     DbUtils.AddParameter(cmd, "@UserProfileId", appointment.UserProfileId);
                     DbUtils.AddParameter(cmd, "@StagerId", appointment.StagerId);
                     DbUtils.AddParameter(cmd, "@AppointmentTime", appointment.AppointmentTime);
                     DbUtils.AddParameter(cmd, "@Address", appointment.Address);
                     DbUtils.AddParameter(cmd, "@Notes", appointment.Notes);
                     DbUtils.AddParameter(cmd, "@IsFurnished", appointment.IsFurnished);
+                    DbUtils.AddParameter(cmd, "@Rooms", appointment.Rooms);
 
                     appointment.Id = (int)cmd.ExecuteScalar();
                 }
@@ -163,16 +167,18 @@ namespace StageIt.Repositories
                                               AppointmentTime = @AppointmentTime,
                                               Address = @Address, 
                                               Notes = @Notes,
-                                              IsFurnished = @IsFurnished
+                                              IsFurnished = @IsFurnished,
+                                              Rooms = @Rooms
                                         WHERE Id = @Id";
                     DbUtils.AddParameter(cmd, "@UserProfileId", appointment.UserProfileId);
                     DbUtils.AddParameter(cmd, "@StagerId", appointment.StagerId);
                     DbUtils.AddParameter(cmd, "@AppointmentTime", appointment.AppointmentTime);
                     DbUtils.AddParameter(cmd, "@Address", appointment.Address);
                     DbUtils.AddParameter(cmd, "@Notes", appointment.Notes);
-
-                    DbUtils.AddParameter(cmd, "@Id", appointment.Id);
                     DbUtils.AddParameter(cmd, "@IsFurnished", appointment.IsFurnished);
+                    DbUtils.AddParameter(cmd, "@Rooms", appointment.Rooms);
+                    DbUtils.AddParameter(cmd, "@Id", appointment.Id);
+                    
                     cmd.ExecuteNonQuery();
                 }
             }

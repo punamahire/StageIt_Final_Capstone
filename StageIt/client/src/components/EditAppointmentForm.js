@@ -52,6 +52,7 @@ export const EditAppointmentForm = () => {
                 appointmentTime: appointment.appointmentTime,
                 address: appointment.address,
                 isFurnished: appointment.isFurnished,
+                rooms: appointment.rooms,
                 notes: appointment.notes
             };
 
@@ -116,6 +117,21 @@ export const EditAppointmentForm = () => {
                             checked={appointment.isFurnished?.toString() === 'false'}
                             onChange={handleOptionChange} /> Vacant
                     </div>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="rooms">Number of Rooms</Label>
+                    <Input
+                        id="rooms"
+                        type="select"
+                        value={appointment.rooms ? appointment.rooms : 'DEFAULT'}
+                        onChange={handleInputChange}>
+                        <option value="DEFAULT" >Select Number of Rooms</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="notes">Notes</Label>

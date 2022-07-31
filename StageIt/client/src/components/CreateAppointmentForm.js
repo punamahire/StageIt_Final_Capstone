@@ -21,6 +21,7 @@ export const CreateAppointmentForm = () => {
         appointmentTime: '',
         address: '',
         isFurnished: false,
+        rooms: 0,
         notes: '',
     })
 
@@ -126,6 +127,20 @@ export const CreateAppointmentForm = () => {
                         <Input type="radio" name="radioGroup" value="false" defaultChecked
                             onChange={handleOptionChange} /> Vacant
                     </div>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="rooms">Number of Rooms</Label>
+                    <Input
+                        id="rooms"
+                        type="select"
+                        onChange={handleInputChange}>
+                        <option value="0">Select Number of Rooms</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="notes">Notes</Label>
