@@ -16,6 +16,7 @@ export const EditAppointmentForm = () => {
     const { appointmentId } = useParams();
     const navigate = useNavigate();
 
+    console.log(appointment);
     const getAppointment = () => {
         getAppointmentById(appointmentId).then(apptFromAPI => {
             setAppointment(apptFromAPI);
@@ -128,7 +129,7 @@ export const EditAppointmentForm = () => {
                 <FormGroup>
                     <Label for="appointmentTime">Appointment Time</Label>
                     <Input type="datetime-local" name="appointmentTime" id="appointmentTime"
-                        value={appointment.appointmentTime ? appointment.appointmentTime : ''}
+                        value={appointment.appointmentTime ? moment(appointment.appointmentTime).format('yyyy-MM-DDThh:mm') : ''}
                         onChange={handleInputChange} required />
                 </FormGroup>
                 <FormGroup>

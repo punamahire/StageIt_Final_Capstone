@@ -68,7 +68,7 @@ export const AppointmentList = () => {
                         </div>
                         <div className="appointment-content p-2">
                             <div className="title-content">
-                                <p><strong>Appointment Date:</strong> {Moment(appointment.appointmentTime).format('MMMM Do, YYYY @ h:mm a')}</p>
+                                <p><strong>Appointment Date:</strong> {Moment(appointment.appointmentTime).format('MMMM Do, YYYY @ h:mma')}</p>
                                 <p><strong>Address:</strong> {appointment.address}</p>
                                 {appointment.isFurnished ?
                                     <p><strong>House Vacant or Furnished:</strong> Furnished</p>
