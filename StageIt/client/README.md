@@ -1,70 +1,110 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Stage It
 
-## Available Scripts
+Full-Stack app built as a final capstone at Nashville Software School.
 
-In the project directory, you can run:
+<details>
+<summary>Preview</summary>
 
-### `npm start`
+![Preview1](/ReadMe_Images/web1.png)
+![Preview2](/ReadMe_Images/web2.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+</details>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Table of contents
+ 
+[Description](#description-link)
 
-### `npm test`
+[Technology Stack](#technology-link)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[How to use](#howToUse-link)
 
-### `npm run build`
+[License](#license-link)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[Author Info](#author-link)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+<h3  id="description-link">Description</h3>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Stage It is a Full-Stack application where users can book and manage appointments with home-stagers and the stagers can view all of their appointments at one place.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+While creating a gallery, users can select from different layouts. They can add photos to the gallery. When the user will share this gallery with others, they will view the photos from the gallery in the selected layout.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The application enable users to:
 
-## Learn More
+- Add a new appointment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Edit or remove an existing appointment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- View all of their appointments
 
-### Code Splitting
+- Search stagers who serve specific locations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- View the stager's work from their previous jobs
 
-### Analyzing the Bundle Size
+<h3  id="technology-link">Technology Stack</h3>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+<img src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' width='50' height='50' />  <img src='https://raw.githubusercontent.com/get-icon/geticon/master/icons/json.svg' width='50' height='50' />  <img src='https://raw.githubusercontent.com/get-icon/geticon/master/icons/html-5.svg' width='50' height='50' />  <img src='https://raw.githubusercontent.com/get-icon/geticon/master/icons/css-3.svg' width='50' height='50' />  <img src='https://raw.githubusercontent.com/get-icon/geticon/master/icons/javascript.svg' width='50' height='50' />  <img src='https://raw.githubusercontent.com/get-icon/geticon/master/icons/bootstrap.svg' width='50' height='50' />  <img src='https://raw.githubusercontent.com/get-icon/geticon/master/icons/github-icon.svg' width='50' height='50' />  <img src='https://cdn.cdnlogo.com/logos/c/27/c.svg' width='50' height='50' />  <img src='https://upload.wikimedia.org/wikipedia/commons/0/0e/Microsoft_.NET_logo.png' width='50' height='50' />  <img src='https://cdn.cdnlogo.com/logos/m/21/microsoft-sql-server.svg' width='50' height='50' />  <img src='https://cdn.cdnlogo.com/logos/m/57/microsoft-azure.svg' width='50' height='50' />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Entity Relationship Diagram (ERD) - created using dbdiagram.io
 
-### Advanced Configuration
+- Wireframe - created using Figma
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+ 
+---
 
-### Deployment
+<h3  id="howToUse-link">How to use</h3>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+Steps to start the website
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Clone the git repo
+
+```
+
+git clone git@github.com:punamahire/StageIt.git
+
+```
+
+2. Go to App directory on your terminal and install npm as below:
+
+```
+
+npm install
+
+```
+
+3. In order to login, use email address 'chirag@gmail.com'. It will let you see the full functionality using dummy data from the database. OR you can register as a new user to create new appointments with the stagers.
+
+
+### ERD
+---
+
+![ERD](/readme_images/erd.png)
+
+### Wireframe
+
+---
+
+[Figma Wireframe](https://www.figma.com/file/ADqfTqAezrmprBgTEI2KHS/StageIt?node-id=0%3A1)
+
+---
+
+<h3  id="author-link">Author Info</h3>
+
+---
+
+If you have any questions about this project, please reach out via LinkedIn and I would be more than happy to address any queries or comments.
+
+- LinkedIn - [Punam Ahire](https://www.linkedin.com/in/punam-ahire/)
+
+- GitHub - [@Punam Ahire](https://github.com/punamahire)
+
+[Back to top](#)

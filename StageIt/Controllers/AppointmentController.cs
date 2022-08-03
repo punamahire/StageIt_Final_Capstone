@@ -21,6 +21,9 @@ namespace StageIt.Controllers
         [HttpGet("GetUserAppointments")]
         public IActionResult Get(int id, int roleId)
         {
+            // get all the appointments of the user using the user-id.
+            // roleId is required to convey DB whether this user is a client 
+            // or stager whose appointments we want to query
             return Ok(_appointmentRepository.GetApptsByUserId(id, roleId));
         }
 

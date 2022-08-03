@@ -24,7 +24,7 @@ export const StagerCard = ({ singleStager, userProfile, handleBookAppt }) => {
                     </div>
                     <div className="title-content content-div">
                         <h3>{singleStager.name}</h3>
-                        <p><strong>Locations served:</strong> {singleStager.locationsServed}</p>
+                        <p><strong>Serves Locations:</strong> {singleStager.locationsServed}</p>
 
                         {/* A client should see a list of all stagers.
                             A stager should also see all stagers but 

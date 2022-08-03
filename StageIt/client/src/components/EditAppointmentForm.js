@@ -16,7 +16,6 @@ export const EditAppointmentForm = () => {
     const { appointmentId } = useParams();
     const navigate = useNavigate();
 
-    console.log(appointment);
     const getAppointment = () => {
         getAppointmentById(appointmentId).then(apptFromAPI => {
             setAppointment(apptFromAPI);
@@ -116,66 +115,72 @@ export const EditAppointmentForm = () => {
     }, [])
 
     return (
-        <div className="container col-sm-6 form-container">
-            <div className='my-2'>
-                <h1>Update Appointment</h1>
-                {userProfile &&
-                    <h4>Stager: {userProfile.name}</h4>
-                }
-            </div>
-            <Form>
-                {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
-                {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
-                <FormGroup>
-                    <Label for="appointmentTime">Appointment Time</Label>
-                    <Input type="datetime-local" name="appointmentTime" id="appointmentTime"
-                        value={appointment.appointmentTime ? moment(appointment.appointmentTime).format('yyyy-MM-DDThh:mm') : ''}
-                        onChange={handleInputChange} required />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="address">Address</Label>
-                    <Input type="text" name="address" id="address" placeholder="Staging Address"
-                        value={appointment.address ? appointment.address : ''}
-                        onChange={handleInputChange} required />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="furnished">Is Home Furnished or Vacant?</Label>
-                    {/* Since, the radio button values are of type string "true" or
-                        "false", we used toString() to compare. The appointment object
-                        has isFurnished as a boolean. */}
-                    <div>
-                        <Input type="radio" name="radioGroup" value="true"
-                            checked={appointment.isFurnished?.toString() === 'true'}
-                            onChange={handleOptionChange} /> Furnished &nbsp;
-                        <Input type="radio" name="radioGroup" value="false"
-                            checked={appointment.isFurnished?.toString() === 'false'}
-                            onChange={handleOptionChange} /> Vacant
+        <section className="vh-100 bg-image" >
+            <div className="mask d-flex align-items-center h-100 gradient-custom">
+                <div className="container py-5">
+                    <div className="container col-sm-6 form-container">
+                        <div className='my-3'>
+                            <h1>Update Appointment</h1>
+                            {userProfile &&
+                                <h4 className='pt-2'>Stager: {userProfile.name}</h4>
+                            }
+                        </div>
+                        <Form>
+                            {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
+                            {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
+                            <FormGroup>
+                                <Label for="appointmentTime">Appointment Time</Label>
+                                <Input type="datetime-local" name="appointmentTime" id="appointmentTime"
+                                    value={appointment.appointmentTime ? moment(appointment.appointmentTime).format('yyyy-MM-DDThh:mm') : ''}
+                                    onChange={handleInputChange} required />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="address">Address</Label>
+                                <Input type="text" name="address" id="address" placeholder="Staging Address"
+                                    value={appointment.address ? appointment.address : ''}
+                                    onChange={handleInputChange} required />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="furnished">Is Home Furnished or Vacant?</Label>
+                                {/* Since, the radio button values are of type string "true" or
+                                    "false", we used toString() to compare. The appointment object
+                                    has isFurnished as a boolean. */}
+                                <div>
+                                    <Input type="radio" name="radioGroup" value="true"
+                                        checked={appointment.isFurnished?.toString() === 'true'}
+                                        onChange={handleOptionChange} /> Furnished &nbsp;
+                                    <Input type="radio" name="radioGroup" value="false"
+                                        checked={appointment.isFurnished?.toString() === 'false'}
+                                        onChange={handleOptionChange} /> Vacant
+                                </div>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="rooms">Number of Rooms</Label>
+                                <Input
+                                    id="rooms"
+                                    type="select"
+                                    value={appointment.rooms ? appointment.rooms : 'DEFAULT'}
+                                    onChange={handleInputChange}>
+                                    <option value="DEFAULT" >Select Number of Rooms</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="notes">Notes</Label>
+                                <Input type="textarea" name="notes" id="notes" placeholder="Enter Notes..."
+                                    value={appointment.notes ? appointment.notes : ''}
+                                    onChange={handleInputChange} />
+                            </FormGroup>
+                            <Button color="primary" onClick={handleEditAppointment}>Update</Button> &nbsp;
+                            <Button color="secondary" onClick={handleCancel}>Cancel</Button>
+                        </Form>
                     </div>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="rooms">Number of Rooms</Label>
-                    <Input
-                        id="rooms"
-                        type="select"
-                        value={appointment.rooms ? appointment.rooms : 'DEFAULT'}
-                        onChange={handleInputChange}>
-                        <option value="DEFAULT" >Select Number of Rooms</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </Input>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="notes">Notes</Label>
-                    <Input type="textarea" name="notes" id="notes" placeholder="Any Notes..."
-                        value={appointment.notes ? appointment.notes : ''}
-                        onChange={handleInputChange} />
-                </FormGroup>
-                <Button color="primary" onClick={handleEditAppointment}>Update</Button> &nbsp;
-                <Button color="secondary" onClick={handleCancel}>Cancel</Button>
-            </Form>
-        </div>
+                </div>
+            </div>
+        </section>
     )
 }

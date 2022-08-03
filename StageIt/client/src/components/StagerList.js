@@ -84,7 +84,9 @@ export const StagerList = () => {
                         )
                     })
                     :
-                    <div><p>Sorry, No Results Found. Try searching another location.</p></div>
+                    ((locationsToSearch !== "") &&
+                        <div><p>Sorry, No Results Found. Try searching another location.</p></div>
+                    )
                 }
             </div>
         </div>

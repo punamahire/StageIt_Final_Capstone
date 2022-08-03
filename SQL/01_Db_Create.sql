@@ -1,6 +1,4 @@
-﻿USE [master]
-
-IF db_id('StageIt') IS NULl
+﻿IF db_id('StageIt') IS NULl
   CREATE DATABASE [StageIt]
 GO
 
@@ -19,7 +17,8 @@ CREATE TABLE [UserProfile] (
   [FirebaseUserId] nvarchar(50) NOT NULL,
   [Name] nvarchar(255) NOT NULL,
   [Email] nvarchar(255) NOT NULL,
-  [ImageUrl] nvarchar(255)
+  [ImageUrl] nvarchar(255),
+  [LocationsServed] nvarchar(255) DEFAULT NULL
 )
 GO
 
@@ -40,8 +39,10 @@ CREATE TABLE [Appointment] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [UserProfileId] int NOT NULL,
   [StagerId] int NOT NULL,
-  [BookingTime] datetime NOT NULL,
+  [AppointmentTime] datetime NOT NULL,
   [Address] nvarchar(255) NOT NULL,
+  [IsFurnished] bit DEFAULT 0 NOT NULL,
+  [Rooms] int DEFAULT 0,
   [Notes] nvarchar(255)
 )
 GO

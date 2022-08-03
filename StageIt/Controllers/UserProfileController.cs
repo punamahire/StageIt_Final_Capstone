@@ -25,19 +25,15 @@ namespace StageIt.Controllers
         public IActionResult Get()
         {
             var userProfile = GetCurrentUserProfile();
-            if (userProfile == null || userProfile.RoleId == 1)
+            if (userProfile.RoleId == 1 || userProfile.RoleId == 2)
             {
-                // a client should see list of all stagers irrespective 
-                // of whether he is logged in or not
-                return Ok(_userProfileRepository.GetAllStagers());
-            }
-            else if (userProfile.RoleId == 2)
-            {
-                // a stager should see rest of the stagers
+                // client or stager can view all stagers
                 return Ok(_userProfileRepository.GetAllStagers());
             }
             else
             {
+                // if the user is not logged in he doesn't get to 
+                // view or book appointment with stagers
                 return BadRequest();
             }
         }

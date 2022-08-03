@@ -53,7 +53,7 @@ export const AppointmentList = () => {
 
     return (
         <div className="appointment-container pl-2">
-            <h1>Appointments</h1>
+            <h1>Your Appointments</h1>
             {appointments.map(appointment => {
                 return (
                     <div className="appointment-card card-color my-3" key={appointment.id}>
@@ -61,9 +61,9 @@ export const AppointmentList = () => {
                             {/* display the name on the appointment based on the 
                                     role of the current logged in user */}
                             {(currentUser && currentUser.roleId == 1) ?
-                                <h3>Stager's Name: {appointment.stagerProfile?.name}</h3>
+                                <h3>Stager: {appointment.stagerProfile?.name}</h3>
                                 :
-                                <h3>Client's Name: {appointment.userProfile?.name}</h3>
+                                <h3>Client: {appointment.userProfile?.name}</h3>
                             }
                         </div>
                         <div className="appointment-content p-2">
@@ -86,7 +86,7 @@ export const AppointmentList = () => {
                     </div>
                 )
             })}
-            <dialog className="dialog" style={{ borderRadius: '0.5rem' }} open={confirmDialog}>
+            <dialog className="dialog" style={{ borderRadius: '0.5rem', position: 'absolute', top: '50%' }} open={confirmDialog}>
                 <div>Are you sure you want to remove this appointment?</div> <br></br>
                 <Button color="primary" onClick={(e) => setConfirmDialog(false)}>Cancel</Button>&nbsp;
                 <Button color="danger" onClick={() => handleDeleteAppt(apptToDelete)}>Confirm</Button>

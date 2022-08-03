@@ -104,60 +104,66 @@ export const CreateAppointmentForm = () => {
     }, [])
 
     return (
-        <div className="container col-sm-6 form-container">
-            <div className='my-2'>
-                {userProfile &&
-                    <h2>Appointment with {userProfile.name}</h2>
-                }
-            </div>
-            <Form>
-                {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
-                {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
+        <section className="vh-100 bg-image" >
+            <div className="mask d-flex align-items-center h-100 gradient-custom">
+                <div className="container py-5">
+                    <div className="container col-sm-6 form-container">
+                        <div className='my-3'>
+                            {userProfile &&
+                                <h2>Appointment with {userProfile.name}</h2>
+                            }
+                        </div>
+                        <Form>
+                            {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
+                            {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
 
-                <FormGroup>
-                    <Label for="appointmentTime">Appointment Time</Label>
-                    <Input type="datetime-local" name="appointmentTime" id="appointmentTime"
-                        onChange={handleInputChange} required />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="address">Address</Label>
-                    <Input type="text" name="address" id="address" placeholder="Staging Address"
-                        onChange={handleInputChange} required />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="furnished">Is Home Furnished or Vacant?</Label>
-                    {/* Furnished is checked when its value is "true"
+                            <FormGroup>
+                                <Label for="appointmentTime">Appointment Time</Label>
+                                <Input type="datetime-local" name="appointmentTime" id="appointmentTime"
+                                    onChange={handleInputChange} required />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="address">Address</Label>
+                                <Input type="text" name="address" id="address" placeholder="Staging Address"
+                                    onChange={handleInputChange} required />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="furnished">Is Home Furnished or Vacant?</Label>
+                                {/* Furnished is checked when its value is "true"
                         Vacant is checked when its value if "false"
                         Note: true and false are string values here */}
-                    <div>
-                        <Input type="radio" name="radioGroup" value="true"
-                            onChange={handleOptionChange} /> Furnished &nbsp;
-                        <Input type="radio" name="radioGroup" value="false" defaultChecked
-                            onChange={handleOptionChange} /> Vacant
+                                <div>
+                                    <Input type="radio" name="radioGroup" value="true"
+                                        onChange={handleOptionChange} /> Furnished &nbsp;
+                                    <Input type="radio" name="radioGroup" value="false" defaultChecked
+                                        onChange={handleOptionChange} /> Vacant
+                                </div>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="rooms">Number of Rooms</Label>
+                                <Input
+                                    id="rooms"
+                                    type="select"
+                                    onChange={handleInputChange}>
+                                    <option value="0">Select Number of Rooms</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="notes">Notes</Label>
+                                <Input type="textarea" name="notes" id="notes" placeholder="Enter Notes..."
+                                    onChange={handleInputChange} />
+                            </FormGroup>
+                            <Button color="primary" onClick={handleCreateAppointment}>Create</Button> &nbsp;&nbsp;
+                            <Button color="secondary" onClick={handleCancel}>Cancel</Button>
+                        </Form>
                     </div>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="rooms">Number of Rooms</Label>
-                    <Input
-                        id="rooms"
-                        type="select"
-                        onChange={handleInputChange}>
-                        <option value="0">Select Number of Rooms</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </Input>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="notes">Notes</Label>
-                    <Input type="textarea" name="notes" id="notes" placeholder="Enter Notes..."
-                        onChange={handleInputChange} />
-                </FormGroup>
-                <Button color="primary" onClick={handleCreateAppointment}>Create</Button> &nbsp;&nbsp;
-                <Button color="secondary" onClick={handleCancel}>Cancel</Button>
-            </Form>
-        </div>
+                </div>
+            </div>
+        </section>
     )
 }

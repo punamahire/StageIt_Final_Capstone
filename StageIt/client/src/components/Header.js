@@ -20,10 +20,10 @@ export default function Header({ isLoggedIn }) {
         <div id="nav">
             <Navbar color="dark" expand="lg">
                 <img
-                    src="Images/logo-no-bck.png" height={100}
+                    src="Images/LogoNew-removebg-preview.png" height={100}
                     alt="Stage It"
                 />
-                <NavbarBrand tag={RRNavLink} to="/" className="nav-link">Stage It</NavbarBrand>
+                {/* <NavbarBrand tag={RRNavLink} to="/" className="nav-link">Stage It</NavbarBrand> */}
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
