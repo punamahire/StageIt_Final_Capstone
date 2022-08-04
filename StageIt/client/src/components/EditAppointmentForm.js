@@ -126,12 +126,12 @@ export const EditAppointmentForm = () => {
                             }
                         </div>
                         <Form>
-                            {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
+                            {errorPresent && <div className='alert alert-danger'>This time is not available. Please choose another date/time.</div>}
                             {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
                             <FormGroup>
                                 <Label for="appointmentTime">Appointment Time</Label>
                                 <Input type="datetime-local" name="appointmentTime" id="appointmentTime"
-                                    value={appointment.appointmentTime ? moment(appointment.appointmentTime).format('yyyy-MM-DDThh:mm') : ''}
+                                    value={appointment.appointmentTime ? appointment.appointmentTime : ''}
                                     onChange={handleInputChange} required />
                             </FormGroup>
                             <FormGroup>

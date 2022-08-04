@@ -179,7 +179,7 @@ namespace StageIt.Repositories
                     LEFT JOIN UserProfileRole upr ON upr.UserProfileId = up.Id
                   WHERE upr.RoleId = 2 AND (";
 
-                    //splitLocations loop and add each like as or condition - up.LocationsServed LIKE @Criterion
+                    //splitLocations loop and add each like as an or condition - up.LocationsServed LIKE @Criterion
                     //AND (up.LocationServed like Location 1 OR up.LocationServed like Location 2)
                     // Loop over the array and add the "LIKE location" clause 
                     // for each location with a conditional OR in between.

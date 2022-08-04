@@ -30,9 +30,7 @@ Full-Stack app built as a final capstone at Nashville Software School.
 
 ---
 
-Stage It is a Full-Stack application where users can book and manage appointments with home-stagers and the stagers can view all of their appointments at one place.
-
-While creating a gallery, users can select from different layouts. They can add photos to the gallery. When the user will share this gallery with others, they will view the photos from the gallery in the selected layout.
+Stage It is a full-stack web application where clients who are looking to stage their homes for open house or sale, can look for stagers and make appointment with them. At the same time, the stagers can view and manage their appointments at one place.
 
 The application enable users to:
 
@@ -45,6 +43,12 @@ The application enable users to:
 - Search stagers who serve specific locations
 
 - View the stager's work from their previous jobs
+
+The application enable stagers to:
+
+- Edit or remove an existing appointment
+
+- View all of their appointments
 
 <h3  id="technology-link">Technology Stack</h3>
 

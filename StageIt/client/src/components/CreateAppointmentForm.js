@@ -114,7 +114,7 @@ export const CreateAppointmentForm = () => {
                             }
                         </div>
                         <Form>
-                            {errorPresent && <div className='alert alert-danger'>Stager is not available for the date/time selected. Please choose another time.</div>}
+                            {errorPresent && <div className='alert alert-danger'>This time is not available. Please choose another date/time.</div>}
                             {invalidInput && <div className='alert alert-danger'>Invalid time or address. Please try again.</div>}
 
                             <FormGroup>
