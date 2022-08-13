@@ -2,10 +2,22 @@
     margin-bottom: 1em;
 }
 
-.card-color {
+/* .card-color {
     background-color: #FFF6EA;
 }
 
 .card-header-footer-color {
     background-color: #f6f4f2 !important;
+} */
+
+.card-title {
+    padding-left: 1em;
+}
+
+.title-content {
+    padding-left: 2em;
+}
+
+.footer-btns {
+    margin-left: 2em;
 }

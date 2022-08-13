@@ -4,6 +4,7 @@ import { Button } from "reactstrap";
 import Moment from 'moment';
 import { getMyAppointments, deleteAppointment } from "../modules/appointmentManager";
 import { getUserByFirebaseId } from "../modules/authManager";
+import "./AppointmentList.css";
 
 export const AppointmentList = () => {
     const [appointments, setAppointments] = useState([]);
@@ -52,7 +53,7 @@ export const AppointmentList = () => {
     }, []);
 
     return (
-        <div className="appointment-container pl-2">
+        <div className="appointment-container">
             <h1>Your Appointments</h1>
             {appointments.map(appointment => {
                 return (
@@ -61,9 +62,9 @@ export const AppointmentList = () => {
                             {/* display the name on the appointment based on the 
                                     role of the current logged in user */}
                             {(currentUser && currentUser.roleId == 1) ?
-                                <h3>Stager: {appointment.stagerProfile?.name}</h3>
+                                <h3 className="card-title">Stager: {appointment.stagerProfile?.name}</h3>
                                 :
-                                <h3>Client: {appointment.userProfile?.name}</h3>
+                                <h3 className="card-title">Client: {appointment.userProfile?.name}</h3>
                             }
                         </div>
                         <div className="appointment-content p-2">
@@ -79,8 +80,8 @@ export const AppointmentList = () => {
                                 <p><strong>Notes:</strong> {appointment.notes}</p>
                             </div>
                         </div>
-                        <div className="card-footer card-header-footer-color footer-btns p-2">
-                            <Button color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>&nbsp;
+                        <div className="card-footer card-header-footer-color p-2">
+                            <Button className="footer-btns" color="primary" onClick={() => handleEditAppt(appointment.id)}>Edit</Button>&nbsp;
                             <Button color="danger" onClick={() => { setApptToDelete(appointment.id); setConfirmDialog(true) }}>Remove</Button>
                         </div>
                     </div>
