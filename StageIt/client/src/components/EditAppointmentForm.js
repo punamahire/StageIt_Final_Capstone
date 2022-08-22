@@ -67,16 +67,26 @@ export const EditAppointmentForm = () => {
                 .then(apptsFromAPI => {
                     for (let stgAppt of apptsFromAPI) {
                         if (!timeOverlap) {
-                            const duration = moment.duration(moment(appointment.appointmentTime).diff(stgAppt.appointmentTime));
-                            var timeDiff = duration.asHours();
 
-                            // the time selected should have a difference
-                            // of 2 hours or more, from existing appointments
-                            // of this stager.
-                            if (timeDiff >= 0 && timeDiff < 2) {
-                                setErrorPresent(true);
-                                timeOverlap = true;
+                            // allow client to update the appt time of existing appt with this stager. 
+                            // while changing the time it need not be 2 hrs apart.
+                            if (appointment.id == stgAppt.id)
+                            {
                                 break;
+                            }
+                            else
+                            {
+                                const duration = moment.duration(moment(appointment.appointmentTime).diff(stgAppt.appointmentTime));
+                                var timeDiff = duration.asHours();
+
+                                // the time selected should have a difference
+                                // of 2 hours or more, from existing appointments
+                                // of this stager.
+                                if (timeDiff >= 0 && timeDiff < 2) {
+                                    setErrorPresent(true);
+                                    timeOverlap = true;
+                                    break;
+                                }
                             }
                         }
                     }

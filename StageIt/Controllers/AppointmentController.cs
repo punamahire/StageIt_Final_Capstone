@@ -49,7 +49,7 @@ namespace StageIt.Controllers
         public IActionResult Edit(int id, Appointment appointment)
         {
             if (id != appointment.Id)
-            {
+            { 
                 return BadRequest();
             }
 
